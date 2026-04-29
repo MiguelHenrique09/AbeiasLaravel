@@ -46,4 +46,10 @@ class PedidoController extends Controller
 
         return view('pages.meusPedidos', compact('pedidos'));
     }
+    public function index3()
+{
+    $pedidos = Pedido::with('user')->get();
+
+    return view('pages.gerenciaStatusp', compact('pedidos'));
+}
 }

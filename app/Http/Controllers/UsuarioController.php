@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
+use App\Models\User;
 
 class UsuarioController extends Controller
 {
@@ -16,6 +16,9 @@ class UsuarioController extends Controller
      public function userCadastro()
     {
   return view('pages/usuarioCadastro');
-    }
-
+    }public function indexClientes()
+{
+    $clientes = User::all();
+    return view('pages/listaClientes', compact('clientes'));
+}
 }

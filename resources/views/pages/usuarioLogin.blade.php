@@ -80,9 +80,12 @@
 
         </div>
     </div>
+<a href="{{ route('home') }}" class="btn btn-light fw-bold">
+                    Voltar
+                </a>
+            </div>
 
-</div>
-
+</div> 
 @endsection
 
 @push('scripts')
@@ -91,9 +94,9 @@
         let tipo = document.getElementById("tipo").value;
 
         if (tipo === "Cliente") {
-            window.location.href = "facaPedido";
+            window.location.href = "{{ route('facaPedido') }}";
         } else if (tipo === "Administrador") {
-            window.location.href = "homeAdmin";
+            window.location.href =  "{{ route('homeAdmin') }}";
         }
     }
 </script>

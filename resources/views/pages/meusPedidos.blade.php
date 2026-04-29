@@ -2,14 +2,19 @@
 
 @section('content')
     <div class="container bg-dark py-5">
+ <div class="mb-4 mt-5">
+        
+          <div class="mb-4 mt-5 text-center">
 
+    <h2 class="fw-bold text-white mb-0">Meus Pedidos</h2>
+
+</div>
+
+    </div>
         <!-- CABEÇALHO -->
         <div class="d-flex justify-content-between align-items-center mb-4">
 
-            <h1 class="mb-0 text-center text-warning fw-bold">
-                Meus Pedidos
-            </h1>
-
+          
             
 
         </div>

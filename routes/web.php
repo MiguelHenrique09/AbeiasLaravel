@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
     use App\Http\Controllers\CardapioController;
     use App\Http\Controllers\UsuarioController;
     use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', function () {
@@ -14,6 +15,9 @@ Route::get('/', function () {
 
 
 Route::get('/cardapio', [CardapioController::class, 'index'])->name('cardapio');
+
+Route::get('/gerenciaProduto', [CardapioController::class, 'indexAdminProdutos'])->name('EditaProdutos');
+
 Route::get('pages/facaPedido', [PedidoController::class, 'index'])->name('facaPedido');
 
 //Route::post('/contato', function () {
@@ -21,13 +25,21 @@ Route::get('pages/facaPedido', [PedidoController::class, 'index'])->name('facaPe
 //})->name('contato.enviar');
 Route::get('/pages/homeAdmin', function () {
     return view('pages.homeAdmin');
-})->name('home');
+})->name('homeAdmin');
 
 Route::get('pages/usuarioLogin', [UsuarioController::class, 'userLogin'])->name('usuarioLogin');
 Route::get('pages/usuarioCadastro', [UsuarioController::class, 'userCadastro'])->name('usuarioCadastro');
 Route::get('/meusPedidos', [PedidoController::class, 'index2'])->name('meusPedidos');
 
+Route::get('/gerenciaStatusp', [PedidoController::class, 'index3'])->name('gerenciaStatusp');
 
 //Route::get('/cliente/clienteCarrinho', [CardapioController::class, 'indexCarrinho'])->name('clienteCarrinho');
 
+Route::get('pages/listaClientes', [UsuarioController::class, 'indexClientes'])->name('listaClientes');
 
+
+
+
+Route::get('pages/relatorioVendas', function () {
+    return view('pages.relatorioVendas');
+})->name('relatorioVendas');
