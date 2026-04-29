@@ -14,7 +14,22 @@ class CardapioController extends Controller
         // 2. Manda para a view
         return view('pages.cardapio', compact('produtos'));
     }
+ public function indexPedido()
+    {
+        // 1. Busca dados do banco
+        $produtos = Produto::where('ativo', 1)->get();
 
+        // 2. Manda para a view
+        return view('pages/cliente.clientePedido', compact('produtos'));
+    }
+ public function indexCarrinho()
+    {
+        // 1. Busca dados do banco
+        $produtos = Produto::where('ativo', 1)->get();
+
+        // 2. Manda para a view
+        return view('pages/cliente.clienteCarrinho', compact('produtos'));
+    }
     // Método que mostra um produto específico
   //  public function show($id)
   //  {

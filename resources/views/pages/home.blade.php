@@ -20,7 +20,7 @@
                         Ver Cardápio
                     </a>
                     @guest
-                        <a class="btn btn-outline-light py-3 px-5 animated slideInLeft">
+                         <a href="{{ route('usuarioCadastro') }}" class="btn btn-outline-light py-3 px-5 animated slideInLeft">
                             Cadastre-se
                         </a>
                     @endguest

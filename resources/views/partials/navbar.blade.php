@@ -5,10 +5,13 @@
         <a href="{{ route('home') }}" class="navbar-brand p-0">
             <h1 class="text-primary m-0">Abeias Burguer</h1>
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="fa fa-bars"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarCollapse">
+
             <div class="navbar-nav ms-auto py-0 pe-4">
 
                 <a href="{{ route('home') }}"
@@ -18,26 +21,22 @@
 
                 <a href="{{ route('cardapio') }}"
                    class="nav-item nav-link {{ request()->routeIs('cardapio') ? 'active' : '' }}">
-                    Cardápio
-                </a>
-
-                <a 
-                   class="nav-item nav-link {{ request()->routeIs('contato') ? 'active' : '' }}">
-                    Fale Conosco
+                    Ver Cardápio
                 </a>
 
             </div>
 
-            {{-- Botão: muda conforme o usuário está logado ou não --}}
+            {{-- Botão muda conforme login --}}
             @auth
                 <a href="{{ route('pedidos.create') }}" class="btn btn-primary py-2 px-4">
-                    <i class="fa fa-shopping-cart me-1"></i> Fazer Pedido
+                    <i class="fa fa-shopping-cart me-1"></i> Fazer Pedidos
                 </a>
             @else
-                <a class="btn btn-primary py-2 px-4">
-                    Faça já seu pedido
+                <a href="{{ route('usuarioLogin') }}" class="btn btn-primary py-2 px-4">
+                    Fazer Login
                 </a>
             @endauth
+
         </div>
     </nav>
 
