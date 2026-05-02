@@ -67,22 +67,12 @@
                                     </button>
 
                                     {{-- INATIVAR / ATIVAR --}}
-                                    <form action="{{ url('produtos/alterarStatus/' . $produto->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
+                                    
 
-                                        <form action="{{ url('produtos/alterarStatus/' . $produto->idProduto) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('PUT')
+                                        <button class="btn btn-warning btn-sm">
+                                            {{ $produto->ativo ? 'Inativar' : 'Ativar' }}
+                                        </button>
 
-                                            <button class="btn btn-warning btn-sm">
-                                                {{ $produto->ativo ? 'Inativar' : 'Ativar' }}
-                                            </button>
-
-                                        </form>
-
-                                    </form>
 
                                 </td>
 
@@ -188,7 +178,7 @@
                         <input type="text" name="descricao_produto" value="{{ $produto->descricao_produto }}"
                             class="form-control mb-3">
 
-                        <label class="form-label">Valor</label>
+                        <label class="form-label">Novo valor</label>
                         <input type="text" inputmode="decimal" step="0.01" name="preco_atual"
                             value="{{ $produto->preco_atual }}" class="for">
 
@@ -213,20 +203,18 @@
 
     {{--                 FIM DO MODAL DE EDITAR PRODUTO             --}}
 
-    {{--                 MODAL DE EDITAR PRODUTO             --}}
+    {{--                 MODAL DE INATIVAR PRODUTO             --}}
 
     <div class="modal fade" id="status{{ $produto->id }}">
 
         <div class="modal-dialog modal-dialog-centered">
 
-            <form action="{{ url('produtos/alterarStatus/' . $produto->id) }}" method="POST"
-                class="modal-content bg-dark text-white">
+            <form action="{{ route('EditaProdutos') }}" method="POST" class="modal-content bg-dark text-white">
 
                 @csrf
-                @method('PUT')
 
                 <div class="modal-body text-center">
-                    <p>Deseja alterar status deste produto?</p>
+                    <p>Deseja inativar este produto?</p>
                 </div>
 
                 <div class="modal-footer">
@@ -240,5 +228,5 @@
 
     </div>
 
-    {{--                 FIM DO MODAL DE EDITAR PRODUTO             --}}
+    {{--                 FIM DO MODAL DE INATIVAR PRODUTO             --}}
 @endsection

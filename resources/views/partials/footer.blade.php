@@ -5,8 +5,8 @@
 
             <div class="col-lg-3 col-md-6">
                 <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Nossas Políticas</h4>
-                <a class="btn btn-link" href="">Políticas de Privacidade</a>
-                <a class="btn btn-link" href="">Termos e Condições</a>
+                <a class="btn btn-link" >Políticas de Privacidade</a>
+                <a class="btn btn-link" >Termos e Condições</a>
             </div>
 
             <div class="col-lg-3 col-md-6">
@@ -52,22 +52,7 @@
                 <p class="mb-0 ps-4">17h00 – 00h00</p>
             </div>
 
-            <div class="col-lg-3 col-md-6">
-                <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Links Rápidos</h4>
-                <a class="btn btn-link" href="{{ route('home') }}">Início</a>
-                <a class="btn btn-link" href="{{ route('cardapio') }}">Cardápio</a>
-                <a class="btn btn-link" >Fale Conosco</a>
-                @auth
-                    <a class="btn btn-link">Meus Pedidos</a>
-                    <form action= method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 ms-2">Sair</button>
-                    </form>
-                @else
-                    <a class="btn btn-link" href="">Login</a>
-                    <a class="btn btn-link" href="">Cadastro</a>
-                @endauth
-            </div>
+          
 
         </div>
     </div>

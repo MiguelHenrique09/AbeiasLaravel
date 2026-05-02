@@ -7,7 +7,7 @@
 
     {{-- TÍTULO --}}
     <div class="mb-4 mt-3">
-        <h2 class="fw-bold text-white">Lista Clientes</h2>
+        <h2 class="fw-bold text-white">Lista Usuários</h2>
         <small class="text-muted">Lista de usuários cadastrados no sistema</small>
     </div>
 
@@ -23,7 +23,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Email</th>
-                        <th>Status</th>
+                        <th>Tipo</th>
                     </tr>
                 </thead>
 
@@ -49,11 +49,7 @@
 
                     @empty
 
-                        <tr>
-                            <td colspan="4" class="text-center text-muted">
-                                Nenhum cliente encontrado
-                            </td>
-                        </tr>
+                
 
                     @endforelse
 

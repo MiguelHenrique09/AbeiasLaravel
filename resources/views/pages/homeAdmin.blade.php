@@ -107,7 +107,7 @@
 
                 <div class="modal-body">
                     <p>Tem certeza que deseja sair da área administrativa?</p>
-                    <small class="text-muted">Você será redirecionado para o login.</small>
+                    <small class="text-muted">Você será redirecionado para a tela inicial.</small>
                 </div>
 
                 <div class="modal-footer">
