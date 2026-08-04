@@ -27,6 +27,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nome</th>
+                            <th>Descrição</th>
                             <th>Preço</th>
                             <th>Status</th>
                             <th>Ações</th>
@@ -39,10 +40,12 @@
                             <tr>
 
                                 {{-- ID --}}
-                                <td>{{ $produto->idProduto }}</td>
-
+                                <td>{{ $produto->idProduto }}</td>   
                                 {{-- NOME --}}
                                 <td>{{ $produto->nome_produto }}</td>
+                                {{-- DESCRIÇÃO --}}
+                                <td>{{ $produto->descricao }}</td>
+                      
 
                                 {{-- PREÇO --}}
                                 <td>
@@ -115,7 +118,7 @@
                 @csrf
 
                 <div class="modal-header">
-                    <h5 class="modal-title text-white">Adicionar Produto</h5>
+                    <h5 class="modal-title text-white">Preencha todos os campos do produto</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -143,7 +146,7 @@
                     </button>
 
                     <button type="submit" class="btn btn-success">
-                        Salvar
+                        Adicionar
                     </button>
                 </div>
 

@@ -90,6 +90,7 @@
                 <a href="{{ route('cardapio') }}" class="btn btn-primary py-3 px-5">
                     Ver Cardápio Completo
                 </a>
+                
             </div>
         </div>
     </div>

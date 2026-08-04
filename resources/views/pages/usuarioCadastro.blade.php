@@ -193,91 +193,81 @@
 
                     <div class="card-register">
 
-                        <h2 class="text-white mb-2">Criar conta</h2>
+    <h2 class="text-white mb-2">Criar conta</h2>
 
+    {{-- Erros de validação --}}
+    @if ($errors->any())
+        <div class="alert-error">
+            <ul class="mb-0 ps-3">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-                        {{-- Erros de validação --}}
-                        @if ($errors->any())
-                            <div class="alert-error">
-                                <ul class="mb-0 ps-3">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+    <form method="POST" action="{{ route('register.store') }}">
+        @csrf
 
+        <div class="mb-4">
+            <label for="name" class="form-label">Nome completo</label>
+            <input type="text" id="name" name="name" value="{{ old('name') }}"
+                class="form-control @error('name') is-invalid @enderror"
+                placeholder="Digite seu nome completo" required>
+            @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
+        <div class="mb-4">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                class="form-control @error('email') is-invalid @enderror" placeholder="Digite seu e-mail"
+                required>
+            @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-                        <div class="mb-4">
-                            <label for="name" class="form-label">Nome completo</label>
-                            <input type="text" id="name" name="name" value="{{ old('name') }}"
-                                class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Digite seu nome completo" required>
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+        <hr class="divider">
 
-                        <div class="mb-4">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}"
-                                class="form-control @error('email') is-invalid @enderror" placeholder="Digite seu e-mail"
-                                required>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-4">
-                            <label class="text-white mb-2">Cadastrar como</label>
-                            <select id="tipo" name="tipo_usuario" class="form-select">
-                                <option value="Cliente">Cliente</option>
-                                <option value="Administrador">Administrador</option>
-                            </select>
-                        </div>
+        <div class="mb-4">
+            <label for="password" class="form-label">Senha</label>
+            <div>
+                <input type="password" id="password" name="password"
+                    class="form-control pe-5 @error('password') is-invalid @enderror"
+                    placeholder="Crie uma senha" required>
+            </div>
+            @error('password')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
+        <div class="mb-4">
+            <label for="password_confirmation" class="form-label">Confirmar senha</label>
+            <div>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    class="form-control pe-5" placeholder="Repita a senha" required>
+            </div>
+        </div>
 
-                        <hr class="divider">
+        <hr class="divider">
 
-                        <div class="mb-4">
-                            <label for="password" class="form-label">Senha</label>
-                            <div>
-                                <input type="password" id="password" name="password"
-                                    class="form-control pe-5 @error('password') is-invalid @enderror"
-                                    placeholder="Crie uma senha" required>
-                            </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary w-100 btn-login">
+                Cadastre-se
+            </button>
+        </div>
 
-                            @error('password')
-                            @enderror
-                        </div>
+        <div class="mt-3">
+            <a href="{{ route('login') }}" class="btn w-100">
+                Já tenho uma conta — Entrar
+            </a>
+        </div>
 
-                        <div class="mb-4">
-                            <label for="password_confirmation" class="form-label">Confirmar senha</label>
-                            <div>
-                                <input type="password" id="password_confirmation" name="password_confirmation"
-                                    class="form-control pe-5" placeholder="Repita a senha" required>
-                            </div>
-                        </div>
+    </form>
 
-                        <hr class="divider">
-
-
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-primary w-100 ">
-                                Criar conta
-                            </button>
-                        </div>
-
-                        <div class="mt-3">
-                            <a href="{{ route('usuarioLogin') }}" class="btn  w-100
-                        ">
-                                Já tenho uma conta — Entrar
-                            </a>
-                        </div>
-
-                        </form>
-
-                    </div>
+</div>
 
                 </div>
             </div>

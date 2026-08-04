@@ -26,16 +26,28 @@
 
             </div>
 
-            {{-- Botão muda conforme login --}}
-            @auth
-                <a href="{{ route('pedidos.create') }}" class="btn btn-primary py-2 px-4">
-                    <i class="fa fa-shopping-cart me-1"></i> Fazer Pedidos
-                </a>
-            @else
-                <a href="{{ route('usuarioLogin') }}" class="btn btn-primary py-2 px-4">
-                    Fazer Login
-                </a>
-            @endauth
+           @auth
+    @if (auth()->user()->tipo_usuario === 'Cliente')
+        <a href="{{ route('facaPedido') }}" class="btn btn-primary py-2 px-4">
+            <i class="fa fa-shopping-cart me-1"></i> Fazer Pedidos
+        </a>
+    @endif
+
+    @if (auth()->user()->tipo_usuario === 'Administrador')
+        
+    @endif
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="nav-item nav-link btn btn-link">
+            Sair
+        </button>
+    </form>
+@else
+    <a href="{{ route('usuarioLogin') }}" class="btn btn-primary py-2 px-4">
+        Fazer Login
+    </a>
+@endauth
 
         </div>
     </nav>
