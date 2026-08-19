@@ -6,18 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class ClienteMiddleware
 {
     public function handle(Request $request, Closure $next): Response
-    {
-        if (auth()->check() && auth()->user()->tipo_usuario === 'Administrador') {
-            return $next($request);
-        }
-
-        abort(403, 'Acesso não autorizado.');
-    }
-
- public function handleCliente(Request $request, Closure $next): Response
     {
         if (auth()->check() && auth()->user()->tipo_usuario === 'Cliente') {
             return $next($request);
@@ -25,6 +16,7 @@ class AdminMiddleware
 
         abort('Faça login como cliente para acessar essa página.');
     }
+
 
 
 

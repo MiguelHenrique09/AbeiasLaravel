@@ -1,24 +1,39 @@
 <?php
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers;
+use Illuminate\Http\Request; 
 use App\Models\User;
 
 class UsuarioController extends Controller
 {
-    // Método que mostra tla de login do usuario
     public function userLogin()
     {
-  return view('pages/usuarioLogin');
-  
-    }
-        // Método que mostra tela de cadastro do usuario
+        return view('pages/usuarioLogin');
 
-     public function userCadastro()
+    }
+
+    public function userCadastro()
     {
-  return view('pages/usuarioCadastro');
-    }public function indexClientes()
+        return view('pages/usuarioCadastro');
+    }
+
+ public function indexClientes(Request $request)
 {
-    $clientes = User::all();
-    return view('pages/listaClientes', compact('clientes'));
+    $filtro = $request->query('status', 'todos');
+    $busca = $request->query('busca');
+
+    $query = User::query();
+
+    if ($filtro === 'recentes') $query->orderBy('created_at', 'desc');
+    if ($filtro === 'antigos') $query->orderBy('created_at', 'asc');
+    if ($busca) $query->where('name', 'like', '%' . $busca . '%');
+
+    if (!in_array($filtro, ['recentes', 'antigos'])) {
+        $query->orderBy('created_at', 'desc');
+    }
+
+    $clientes = $query->paginate(10);
+
+    return view('pages.listaClientes', compact('clientes', 'filtro', 'busca'));
 }
 }

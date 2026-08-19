@@ -13,7 +13,9 @@ class Produto extends Model
     protected $fillable = [
         'nome_produto',
         'preco_atual',
-        'ativo'
+        'ativo',
+        'descricao',
+        'tipo_Produto',
     ];
 
     public function pedidos()

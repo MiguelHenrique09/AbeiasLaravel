@@ -16,9 +16,7 @@
                         faça seu pedido — estaremos ao seu lado em cada etapa, garantindo qualidade,
                         atenção e um atendimento feito com carinho de verdade.
                     </p>
-                    <a href="{{ route('cardapio') }}" class="btn btn-primary py-3 px-5 me-3 animated slideInLeft">
-                        Ver Cardápio
-                    </a>
+                   
                     @guest
                          <a href="{{ route('usuarioCadastro') }}" class="btn btn-outline-light py-3 px-5 animated slideInLeft">
                             Cadastre-se

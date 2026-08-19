@@ -16,4 +16,15 @@ class LoginResponse implements LoginResponseContract
 
         return redirect()->route('home');
     }
+
+    public function toResponseCliente($request)
+    {
+        $user = auth()->user();
+
+        if ($user->tipo_usuario === 'Cliente') {
+            return redirect()->route('facaPedido');
+        }
+
+        return redirect()->route('home');
+    }
 }

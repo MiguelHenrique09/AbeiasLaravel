@@ -1,73 +1,83 @@
-
 @extends('layouts.app')
 
 @section('content')
+    <div class="container bg-dark py-5">
 
-<div class="container bg-dark py-5">
+        {{-- TÍTULO --}}
+        <div class="mb-4 mt-5">
+            <h2 class="fw-bold text-white">Lista Usuários</h2>
+            <small class="text-muted">Lista de usuários cadastrados no sistema</small>
+        </div>
 
-    {{-- TÍTULO --}}
-    <div class="mb-4 mt-3">
-        <h2 class="fw-bold text-white">Lista Usuários</h2>
-        <small class="text-muted">Lista de usuários cadastrados no sistema</small>
-    </div>
+        <form method="GET" class="d-flex gap-2 mb-3">
+            <select name="status" class="form-select bg-dark text-white" onchange="this.form.submit()">
+                <option value="todos" {{ $filtro === 'todos' ? 'selected' : '' }}>Todos</option>
+                <option value="recentes" {{ $filtro === 'recentes' ? 'selected' : '' }}>Recentes</option>
+                <option value="antigos" {{ $filtro === 'antigos' ? 'selected' : '' }}>Antigos</option>
+            </select>
 
-    {{-- TABELA --}}
-    <div class="card border-0 bg-dark shadow-sm p-3">
+            <input type="text" name="busca" value="{{ $busca }}" placeholder="Buscar cliente"
+                class="form-control">
+        </form>
 
-        <div class="table-responsive">
+        {{-- TABELA --}}
+        <div class="card border-0 bg-dark shadow-sm p-3">
 
-            <table class="table table-dark table-hover align-middle">
+            <div class="table-responsive">
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Tipo</th>
-                    </tr>
-                </thead>
+                <table class="table table-dark table-hover align-middle">
 
-                <tbody>
-
-                    @forelse($clientes as $cliente)
-
+                    <thead>
                         <tr>
-
-                            {{-- ID --}}
-                            <td>{{ $cliente->id }}</td>
-
-                            {{-- NOME --}}
-                            <td>{{ $cliente->name }}</td>
-
-                            {{-- EMAIL --}}
-                            <td>{{ $cliente->email }}</td>
-
-                                                       <td>{{ $cliente->tipo_usuario }} </td>
-
-
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Tipo</th>
                         </tr>
+                    </thead>
 
-                    @empty
+                    <tbody>
 
-                
+                        @forelse($clientes as $cliente)
+                            <tr>
 
-                    @endforelse
+                                {{-- ID --}}
+                                <td>{{ $cliente->id }}</td>
 
-                </tbody>
+                                {{-- NOME --}}
+                                <td>{{ $cliente->name }}</td>
 
-            </table>
+                                {{-- EMAIL --}}
+                                <td>{{ $cliente->email }}</td>
+
+                                <td>{{ $cliente->tipo_usuario }}</td>
+
+                            </tr>
+
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">
+                                    Nenhum usuário encontrado
+                                </td>
+                            </tr>
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                {{ $clientes->links() }}
+            </div>
+             <div class="mt-3">
+            <a href="{{ route('homeAdmin') }}" class="btn btn-light fw-bold">
+                Voltar
+            </a>
+        </div>
 
         </div>
 
+       
     </div>
-
-    {{-- VOLTAR --}}
-    <div class="mt-3">
-        <a href="{{ route('homeAdmin') }}" class="btn btn-light fw-bold">
-            Voltar
-        </a>
-    </div>
-
-</div>
-
 @endsection

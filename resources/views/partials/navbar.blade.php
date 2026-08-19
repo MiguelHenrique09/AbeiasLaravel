@@ -11,44 +11,49 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto align-items-center">
 
-            <div class="navbar-nav ms-auto py-0 pe-4">
+                @auth
 
-                <a href="{{ route('home') }}"
-                   class="nav-item nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                    Início
-                </a>
+                    @if (auth()->user()->tipo_usuario === 'Cliente')
+                        <a href="{{ route('home') }}" class="nav-item nav-link">
+                            Início
+                        </a>
 
-                <a href="{{ route('cardapio') }}"
-                   class="nav-item nav-link {{ request()->routeIs('cardapio') ? 'active' : '' }}">
-                    Ver Cardápio
-                </a>
+                        <a href="{{ route('facaPedido') }}" class="btn btn-primary ms-3">
+                            <i class="fa fa-shopping-cart me-1"></i> Fazer Pedidos
+                        </a>
+                          <a href="{{ route('cardapio') }}" class="nav-item nav-link">
+                        Ver Cardápio
+                    </a>
+                    @endif
+
+                    @if (auth()->user()->tipo_usuario === 'Administrador')
+                        <a href="{{ route('homeAdmin') }}" class="btn btn-primary ms-3">
+                            <i class="fa me-1"></i> Área de administração
+                        </a>
+                          <a href="{{ route('cardapio') }}" class="nav-item nav-link">
+                        Ver Cardápio
+                    </a>
+                    @endif
+
+                    <form method="POST" action="{{ route('logout') }}" class="ms-3">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link">
+                            Sair
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('cardapio') }}" class="nav-item nav-link">
+                        Ver Cardápio
+                    </a>
+                    <a href="{{ route('usuarioLogin') }}" class="btn btn-primary ms-3">
+                        Fazer Login
+                    </a>
+
+                @endauth
 
             </div>
-
-           @auth
-    @if (auth()->user()->tipo_usuario === 'Cliente')
-        <a href="{{ route('facaPedido') }}" class="btn btn-primary py-2 px-4">
-            <i class="fa fa-shopping-cart me-1"></i> Fazer Pedidos
-        </a>
-    @endif
-
-    @if (auth()->user()->tipo_usuario === 'Administrador')
-        
-    @endif
-
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="nav-item nav-link btn btn-link">
-            Sair
-        </button>
-    </form>
-@else
-    <a href="{{ route('usuarioLogin') }}" class="btn btn-primary py-2 px-4">
-        Fazer Login
-    </a>
-@endauth
-
         </div>
     </nav>
 

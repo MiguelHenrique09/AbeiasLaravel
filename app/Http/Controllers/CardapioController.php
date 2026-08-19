@@ -1,54 +1,97 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use Illuminate\Http\Request;
 
 class CardapioController extends Controller
+
 {
-    // Método que lista os produtos
-    public function index()
-    {
-        // 1. Busca dados do banco
-        $produtos = Produto::where('ativo', 1)->get();
+public function indexClientesProdutos(Request $request)
+{
+    $filtro = $request->query('status', 'todos');
+    $busca = $request->query('busca');
 
-        // 2. Manda para a view
-        return view('pages.cardapio', compact('produtos'));
+    $query = Produto::query()->where('ativo', 1);
+
+    if (in_array($filtro, ['Lanche', 'Porção', 'Bebida'])) {
+        $query->where('tipo_Produto', $filtro);
     }
 
-      public function indexAdminProdutos()
-    {
-        // 1. Busca dados do banco
-        $produtos = Produto::where('ativo', 1)->get();
-
-        // 2. Manda para a view
-        return view('pages.gerenciaProduto', compact('produtos'));
+    if ($busca) {
+        $query->where('nome_produto', 'like', '%' . $busca . '%');
     }
 
+    $produtos = $query->paginate(15);
+
+    return view('pages.cardapio', compact('produtos', 'filtro', 'busca'));
+}
 
 
- //public function indexPedido()
-   // {
-        // 1. Busca dados do banco
-    //    $produtos = Produto::where('ativo', 1)->get();
+   public function indexAdminProdutos(Request $request)
+{
+    $filtro = $request->query('status', 'todos');
+    $busca = $request->query('busca');
 
-    //    // 2. Manda para a view
-   //    return view('pages.clientePedido', compact('produtos'));
-   // }
+    $query = Produto::query();
 
+    if ($filtro === 'ativos') $query->where('ativo', 1);
+    if ($filtro  === 'inativos') $query->where('ativo', 0);
+    if ($filtro === 'recentes') $query->orderBy('created_at', 'desc');
+    if ($filtro === 'antigos ') $query->orderBy('created_at', 'asc');
+    if ($busca) $query->where('nome_produto', 'like', '%' . $busca . '%');
 
-   
- public function indexCarrinho()
+    $produtos = $query->paginate(10);
+
+    return view('pages.gerenciaProduto', compact('produtos', 'filtro', 'busca'));
+}
+
+    public function cria(Request $request)
     {
-        // 1. Busca dados do banco
-        $produtos = Produto::where('ativo', 1)->get();
+        $request->validate([
+            'nome_produto' => 'required|string|max:255',
+            'descricao_produto' => 'nullable|string',
+            'preco_atual' => 'required|numeric|min:0',
+            'tipo_Produto' => 'required|string',
+        ]);
 
-        // 2. Manda para a view
-        return view('pages/cliente.clienteCarrinho', compact('produtos'));
+        Produto::create([
+            'nome_produto' => $request->nome_produto,
+            'descricao' => $request->descricao_produto,
+            'preco_atual' => $request->preco_atual,
+            'tipo_Produto' => $request->tipo_Produto,
+            'ativo' => 1,
+        ]);
+
+        return redirect()->back()->with('success', 'Produto adicionado com sucesso!');
     }
-    // Método que mostra um produto específico
-  //  public function show($id)
-  //  {
-   //     $produto = Produto::findOrFail($id);
-   //     return view('pages.produto', compact('produto'));
-   // }
+
+    //
+    public function atualizar(Request $request, $id)
+    {
+        $request->validate([
+            'descricao_produto' => 'nullable|string',
+            'preco_atual' => 'required|numeric|min:0',
+        ]);
+
+        $produto = Produto::findOrFail($id);
+
+        $produto->atualizar([
+            'descricao' => $request->descricao_produto,
+            'preco_atual' => $request->preco_atual,
+        ]);
+
+        return redirect()->back();
+    }
+
+    //
+    public function atualizarStatus($id)
+    {
+        $produto = Produto::findOrFail($id);
+        $produto->ativo = ! $produto->ativo;
+        $produto->save();
+
+        return redirect()->back();
+    }
 }

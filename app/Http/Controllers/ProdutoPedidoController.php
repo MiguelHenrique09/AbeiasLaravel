@@ -11,7 +11,6 @@ class ProdutoPedidoController extends Controller
     {
         $dados = DB::table('produto_pedido')->get();
 
-        //return view('produto_pedido.index', compact('dados'));
     }
 
     public function store(Request $request)

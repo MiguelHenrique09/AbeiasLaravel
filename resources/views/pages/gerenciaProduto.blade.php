@@ -3,107 +3,128 @@
 @section('content')
     <div class="container bg-dark py-5">
 
-        {{-- TÍTULO --}}
-        <div class="mb-4 mt-3">
+        <div class="mb-4 mt-5">
             <h2 class="fw-bold text-white">Gerenciar Produtos</h2>
             <small class="text-muted">Adicione, edite ou inative produtos do sistema</small>
         </div>
 
-        {{-- BOTÃO ADICIONAR --}}
-        <div class="mb-3">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdd">
+
+        <div class="d-flex gap-2 mb-3">
+
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalAdd">
                 Adicionar Produto
             </button>
+
+            <form method="GET" class="d-flex gap-2">
+                <select name="status" class="form-select bg-dark text-white" onchange="this.form.submit()">
+                    <option value="todos" {{ $filtro === 'todos' ? 'selected' : '' }}>Todos</option>
+                    <option value="ativos" {{ $filtro === 'ativos' ? 'selected' : '' }}>Ativos</option>
+                    <option value="inativos" {{ $filtro === 'inativos' ? 'selected' : '' }}>Inativos</option>
+                    <option value="recentes" {{ $filtro === 'recentes' ? 'selected' : '' }}>Recentes</option>
+                    <option value="antigos" {{ $filtro === 'antigos' ? 'selected' : '' }}>Antigos</option>
+
+                </select>
+
+                <input type="text" name="busca" value="{{ $busca }}" placeholder="Buscar produto"
+                    class="form-control">
+
+            </form>
+
         </div>
+    </div>
 
-        {{-- TABELA --}}
-        <div class="card border-0 bg-dark shadow-sm p-3">
 
-            <div class="table-responsive">
 
-                <table class="table table-dark table-hover align-middle">
+    {{-- TABELA --}}
+    <div class="card border-0 bg-dark shadow-sm p-3">
 
-                    <thead>
+        <div class="table-responsive">
+
+            <table class="table table-dark table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @forelse($produtos as $produto)
                         <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Preço</th>
-                            <th>Status</th>
-                            <th>Ações</th>
+
+                            {{-- ID --}}
+                            <td>{{ $produto->idProduto }}</td>
+                            {{-- NOME --}}
+                            <td>{{ $produto->nome_produto }}</td>
+                            {{-- DESCRIÇÃO --}}
+                            <td>{{ $produto->descricao }}</td>
+
+                            {{-- PREÇO --}}
+                            <td>
+                                R$ {{ number_format($produto->preco_atual, 2, ',', '.') }}
+                            </td>
+
+                            {{-- STATUS --}}
+                            <td>
+                                @if ($produto->ativo)
+                                    <span class="badge bg-success">Ativo</span>
+                                @else
+                                    <span class="badge bg-danger">Inativo</span>
+                                @endif
+                            </td>
+
+                            {{-- AÇÕES --}}
+                            <td class="d-flex gap-2">
+
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#edit{{ $produto->idProduto }}">
+                                    Editar
+                                </button>
+
+                                {{-- INATIVAR / ATIVAR --}}
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#status{{ $produto->idProduto }}">
+                                    {{ $produto->ativo ? 'Inativar' : 'Ativar' }}
+                                </button>
+
+                            </td>
+
                         </tr>
-                    </thead>
 
-                    <tbody>
+                    @empty
 
-                        @forelse($produtos as $produto)
-                            <tr>
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">
+                                Nenhum produto encontrado
+                            </td>
+                        </tr>
+                    @endforelse
 
-                                {{-- ID --}}
-                                <td>{{ $produto->idProduto }}</td>   
-                                {{-- NOME --}}
-                                <td>{{ $produto->nome_produto }}</td>
-                                {{-- DESCRIÇÃO --}}
-                                <td>{{ $produto->descricao }}</td>
-                      
+                </tbody>
 
-                                {{-- PREÇO --}}
-                                <td>
-                                    R$ {{ number_format($produto->preco_atual, 2, ',', '.') }}
-                                </td>
-
-                                {{-- STATUS --}}
-                                <td>
-                                    @if ($produto->ativo)
-                                        <span class="badge bg-success">Ativo</span>
-                                    @else
-                                        <span class="badge bg-danger">Inativo</span>
-                                    @endif
-                                </td>
-
-                                {{-- AÇÕES --}}
-                                <td class="d-flex gap-2">
-
-                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#edit{{ $produto->idProduto }}">
-                                        Editar
-                                    </button>
-
-                                    {{-- INATIVAR / ATIVAR --}}
-                                    
-
-                                        <button class="btn btn-warning btn-sm">
-                                            {{ $produto->ativo ? 'Inativar' : 'Ativar' }}
-                                        </button>
-
-
-                                </td>
-
-                            </tr>
-
-                        @empty
-
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">
-                                    Nenhum produto encontrado
-                                </td>
-                            </tr>
-                        @endforelse
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
+            </table>
+ <div class="d-flex justify-content-center mt-4">
+            {{ $produtos->links() }}
         </div>
-
-        {{-- VOLTAR --}}
-        <div class="mt-3">
-            <a href="{{ route('homeAdmin') }}" class="btn btn-light fw-bold">
-                Voltar
-            </a>
+        
+         <div class="mt-3">
+        <a href="{{ route('homeAdmin') }}" class="btn btn-light fw-bold">
+            Voltar
+        </a>
+    </div>
         </div>
+       
+
+
+    </div>
+
+   
 
     </div>
 
@@ -113,7 +134,7 @@
 
         <div class="modal-dialog modal-dialog-centered">
 
-            <form action="#" method="POST" class="modal-content bg-dark text-white">
+            <form action="{{ route('criarProduto') }}" method="POST" class="modal-content bg-dark text-white">
 
                 @csrf
 
@@ -124,17 +145,18 @@
 
                 <div class="modal-body">
 
-                    <input type="text" name="nome_produto" class="form-control mb-2" placeholder="Nome">
+                    <input type="text" name="nome_produto" class="form-control mb-2" placeholder="Nome" required>
 
                     <input type="text" name="descricao_produto" class="form-control mb-2" placeholder="Descrição">
 
-                    <input type="number" name="preco_atual" class="form-control mb-2" placeholder="Preço">
+                    <input type="number" step="0.01" name="preco_atual" class="form-control mb-2" placeholder="Preço"
+                        required>
 
-                    <select name="tipoProduto" class="form-select bg-dark text-white">
+                    <select name="tipo_Produto" class="form-select bg-dark text-white">
 
-                        <option value="Lanches">Lanches</option>
-                        <option value="Porções">Porções</option>
-                        <option value="Bebidas">Bebidas</option>
+                        <option value="Lanche">Lanches</option>
+                        <option value="Porção">Porções</option>
+                        <option value="Bebida">Bebidas</option>
 
                     </select>
 
@@ -163,7 +185,7 @@
 
             <div class="modal-dialog modal-dialog-centered">
 
-                <form action="{{ url('produtos/update/' . $produto->idProduto) }}" method="POST"
+                <form action="{{ route('atualizarProduto', $produto->idProduto) }}" method="POST"
                     class="modal-content bg-dark text-white">
 
                     @csrf
@@ -178,12 +200,12 @@
                     <div class="modal-body">
 
                         <label class="form-label">Nova descrição</label>
-                        <input type="text" name="descricao_produto" value="{{ $produto->descricao_produto }}"
+                        <input type="text" name="descricao_produto" value="{{ $produto->descricao }}"
                             class="form-control mb-3">
 
                         <label class="form-label">Novo valor</label>
                         <input type="text" inputmode="decimal" step="0.01" name="preco_atual"
-                            value="{{ $produto->preco_atual }}" class="for">
+                            value="{{ $produto->preco_atual }}" class="form-control">
 
                     </div>
 
@@ -202,34 +224,37 @@
             </div>
 
         </div>
-    @endforeach
 
-    {{--                 FIM DO MODAL DE EDITAR PRODUTO             --}}
+        {{--             MODAL DE INATIVAR/ATIVAR PRODUTO (agora dentro do loop, um por produto)          --}}
+        <div class="modal fade" id="status{{ $produto->idProduto }}" tabindex="-1">
 
-    {{--                 MODAL DE INATIVAR PRODUTO             --}}
+            <div class="modal-dialog modal-dialog-centered">
 
-    <div class="modal fade" id="status{{ $produto->id }}">
+                <form action="{{ route('atualizarStatusProduto', $produto->idProduto) }}" method="POST"
+                    class="modal-content bg-dark text-white">
 
-        <div class="modal-dialog modal-dialog-centered">
+                    @csrf
+                    @method('PUT')
 
-            <form action="{{ route('EditaProdutos') }}" method="POST" class="modal-content bg-dark text-white">
+                    <div class="modal-body text-center">
+                        <p>
+                            @if ($produto->ativo)
+                                Deseja inativar o produto "{{ $produto->nome_produto }}"?
+                            @else
+                                Deseja ativar o produto "{{ $produto->nome_produto }}"?
+                            @endif
+                        </p>
+                    </div>
 
-                @csrf
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning">Confirmar</button>
+                    </div>
 
-                <div class="modal-body text-center">
-                    <p>Deseja inativar este produto?</p>
-                </div>
+                </form>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-warning">Confirmar</button>
-                </div>
-
-            </form>
+            </div>
 
         </div>
-
-    </div>
-
-    {{--                 FIM DO MODAL DE INATIVAR PRODUTO             --}}
+    @endforeach
 @endsection
