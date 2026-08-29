@@ -14,18 +14,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        abort(403, 'Acesso não autorizado.');
+        return redirect('/')->with('aviso', 'Acesso não autorizado.');
     }
-
- public function handleCliente(Request $request, Closure $next): Response
-    {
-        if (auth()->check() && auth()->user()->tipo_usuario === 'Cliente') {
-            return $next($request);
-        }
-
-        abort('Faça login como cliente para acessar essa página.');
-    }
-
-
-
 }

@@ -133,5 +133,9 @@
         </div>
     </div>
     <!-- Sobre Nós End -->
-
+@if (session('aviso'))
+    <div class="alert alert-warning">
+        {{ session('aviso') }}
+    </div>
+@endif
 @endsection

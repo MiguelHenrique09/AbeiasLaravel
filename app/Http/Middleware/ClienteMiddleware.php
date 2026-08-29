@@ -14,10 +14,6 @@ class ClienteMiddleware
             return $next($request);
         }
 
-        abort('Faça login como cliente para acessar essa página.');
+        return redirect('/')->with('aviso', 'Faça login como cliente para acessar essa página.');
     }
-
-
-
-
 }
