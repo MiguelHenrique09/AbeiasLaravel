@@ -12,14 +12,20 @@
 }
 
 .hero-headerC {
-    height: 400px; 
+    min-height: 250px;
     align-items: center;
+    justify-content: center;
     display: flex;
-    
 }
-.txtHHC{
-margin-left: 400px;
+.txtHHC {
+    width: 100%;
+    text-align: center;
+}
 
+@media (min-width: 992px) {
+    .hero-headerC {
+        height: 400px;
+    }
 }
 
 
@@ -327,6 +333,3 @@ margin-left: 400px;
 
 
 /*** tela admin css ***/
-
-
-
