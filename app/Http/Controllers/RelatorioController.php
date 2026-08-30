@@ -67,7 +67,8 @@ class RelatorioController extends Controller
             }
         }
 
-        $maxPedidosPeriodo = max(array_column($pedidosPorPeriodo, 'total')) ?: 1;
+        $totaisPeriodo = array_column($pedidosPorPeriodo, 'total');
+        $maxPedidosPeriodo = !empty($totaisPeriodo) ? max($totaisPeriodo) : 1;
 
         // Produtos mais vendidos no período (top 3)
         $produtosMaisVendidos = DB::table('produto_pedido')
