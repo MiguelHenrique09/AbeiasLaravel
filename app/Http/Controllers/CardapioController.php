@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 
 class CardapioController extends Controller
@@ -54,6 +55,7 @@ public function indexClientesProdutos(Request $request)
             'descricao_produto' => 'nullable|string',
             'preco_atual' => 'required|numeric|min:0',
             'tipo_Produto' => 'required|string',
+            'imagem' => 'nullable|image|max:2048',
         ]);
 
         Produto::create([
@@ -61,6 +63,7 @@ public function indexClientesProdutos(Request $request)
             'descricao' => $request->descricao_produto,
             'preco_atual' => $request->preco_atual,
             'tipo_Produto' => $request->tipo_Produto,
+            'imagem_url' => $this->enviarImagem($request),
             'ativo' => 1,
         ]);
 
@@ -73,14 +76,21 @@ public function indexClientesProdutos(Request $request)
         $request->validate([
             'descricao_produto' => 'nullable|string',
             'preco_atual' => 'required|numeric|min:0',
+            'imagem' => 'nullable|image|max:2048',
         ]);
 
         $produto = Produto::findOrFail($id);
 
-        $produto->atualizar([
+        $dados = [
             'descricao' => $request->descricao_produto,
             'preco_atual' => $request->preco_atual,
-        ]);
+        ];
+
+        if ($url = $this->enviarImagem($request)) {
+            $dados['imagem_url'] = $url;
+        }
+
+        $produto->update($dados);
 
         return redirect()->back();
     }
@@ -93,5 +103,21 @@ public function indexClientesProdutos(Request $request)
         $produto->save();
 
         return redirect()->back();
+    }
+
+    private function enviarImagem(Request $request): ?string
+    {
+        if (! $request->hasFile('imagem')) {
+            return null;
+        }
+
+        $cloudinary = new Cloudinary(config('services.cloudinary.url'));
+
+        $resultado = $cloudinary->uploadApi()->upload(
+            $request->file('imagem')->getRealPath(),
+            ['folder' => 'abeias']
+        );
+
+        return $resultado['secure_url'];
     }
 }

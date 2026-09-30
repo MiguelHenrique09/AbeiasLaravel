@@ -26,6 +26,10 @@
 
         @foreach ($produtos as $produto)
             <div class="card border-0  p-3 mb-3">
+                @if ($produto->imagem_url)
+                    <img src="{{ $produto->imagem_url }}" alt="{{ $produto->nome_produto }}"
+                        class="img-fluid rounded mb-2" style="max-height: 250px; object-fit: cover;">
+                @endif
                 <h3>{{ $produto->nome_produto }}</h3>
 
                 <p>{{ $produto->descricao }}</p>

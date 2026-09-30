@@ -16,6 +16,7 @@ class Produto extends Model
         'ativo',
         'descricao',
         'tipo_Produto',
+        'imagem_url',
     ];
 
     public function pedidos()

@@ -134,7 +134,7 @@
 
         <div class="modal-dialog modal-dialog-centered">
 
-            <form action="{{ route('criarProduto') }}" method="POST" class="modal-content bg-dark text-white">
+            <form action="{{ route('criarProduto') }}" method="POST" enctype="multipart/form-data" class="modal-content bg-dark text-white">
 
                 @csrf
 
@@ -151,6 +151,8 @@
 
                     <input type="number" step="0.01" name="preco_atual" class="form-control mb-2" placeholder="Preço"
                         required>
+
+                    <input type="file" name="imagem" accept="image/*" class="form-control mb-2">
 
                     <select name="tipo_Produto" class="form-select bg-dark text-white">
 
@@ -186,7 +188,7 @@
             <div class="modal-dialog modal-dialog-centered">
 
                 <form action="{{ route('atualizarProduto', $produto->idProduto) }}" method="POST"
-                    class="modal-content bg-dark text-white">
+                    enctype="multipart/form-data" class="modal-content bg-dark text-white">
 
                     @csrf
                     @method('PUT')
@@ -205,7 +207,10 @@
 
                         <label class="form-label">Novo valor</label>
                         <input type="text" inputmode="decimal" step="0.01" name="preco_atual"
-                            value="{{ $produto->preco_atual }}" class="form-control">
+                            value="{{ $produto->preco_atual }}" class="form-control mb-3">
+
+                        <label class="form-label">Nova imagem</label>
+                        <input type="file" name="imagem" accept="image/*" class="form-control">
 
                     </div>
 
