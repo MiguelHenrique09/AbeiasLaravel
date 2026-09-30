@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
-        Schema::table('produto', function (Blueprint $table) {
-            $table->string('imagem_url')->nullable()->after('descricao');
-        });
-    }
+    public function up()
+{
+    Schema::table('produto', function (Blueprint $table) {
+        $table->string('imagem_url')->nullable()->after('nome');
+    });
+}
 
     public function down(): void
     {
