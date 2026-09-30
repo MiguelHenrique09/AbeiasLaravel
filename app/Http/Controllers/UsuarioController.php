@@ -8,13 +8,13 @@ class UsuarioController extends Controller
 {
     public function userLogin()
     {
-        return view('pages/usuarioLogin');
+        return view('pages.usuarioLogin');
 
     }
 
     public function userCadastro()
     {
-        return view('pages/usuarioCadastro');
+        return view('pages.usuarioCadastro');
     }
 
  public function indexClientes(Request $request)
