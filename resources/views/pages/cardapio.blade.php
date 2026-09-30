@@ -24,21 +24,24 @@
     </form>
 </div>
 
-        @foreach ($produtos as $produto)
-            <div class="card border-0  p-3 mb-3">
-                @if ($produto->imagem_url)
-                    <img src="{{ $produto->imagem_url }}" alt="{{ $produto->nome_produto }}"
-                        class="img-fluid rounded mb-2" style="max-height: 250px; object-fit: cover;">
-                @endif
+     @foreach ($produtos as $produto)
+    <div class="card border-0 p-3 mb-3">
+        <div class="d-flex align-items-center">
+            @if ($produto->imagem_url)
+                <img src="{{ $produto->imagem_url }}" alt="{{ $produto->nome_produto }}"
+                    class="rounded me-3 flex-shrink-0" style="width: 200px; height: 150px; object-fit: contain;">
+            @endif
+
+            <div>
                 <h3>{{ $produto->nome_produto }}</h3>
-
                 <p>{{ $produto->descricao }}</p>
-
                 <p><strong>R$ {{ number_format($produto->preco_atual, 2, ',', '.') }}</strong></p>
-
-                <hr>
             </div>
-        @endforeach
+        </div>
+
+        <hr>
+    </div>
+@endforeach
 
         <div class="d-flex justify-content-center mt-4">
             {{ $produtos->links() }}
