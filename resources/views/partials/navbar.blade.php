@@ -14,50 +14,39 @@
             <div class="navbar-nav ms-auto align-items-center">
 
                 @auth
-
                     @if (auth()->user()->tipo_usuario === 'Cliente')
-                        <a href="{{ route('home') }}" class="nav-item nav-link">
-                            Início
-                        </a>
+                        <a href="{{ route('home') }}" class="nav-item nav-link">Início</a>
 
                         <a href="{{ route('facaPedido') }}" class="btn btn-primary ms-3">
                             <i class="fa fa-shopping-cart me-1"></i> Fazer Pedidos
                         </a>
-                          <a href="{{ route('cardapio') }}" class="nav-item nav-link">
-                        Ver Cardápio
-                    </a>
+
+                        <a href="{{ route('cardapio') }}" class="nav-item nav-link">Ver Cardápio</a>
                     @endif
 
                     @if (auth()->user()->tipo_usuario === 'Administrador')
                         <a href="{{ route('homeAdmin') }}" class="btn btn-primary ms-3">
-                            <i class="fa me-1"></i> Área de administração
+                            Área de administração
                         </a>
-                          <a href="{{ route('cardapio') }}" class="nav-item nav-link">
-                        Ver Cardápio
-                    </a>
+
+                        <a href="{{ route('cardapio') }}" class="nav-item nav-link">Ver Cardápio</a>
                     @endif
 
                     <form method="POST" action="{{ route('logout') }}" class="ms-3">
                         @csrf
-                        <button type="submit" class="btn btn-link nav-link">
-                            Sair
-                        </button>
+                        <button type="submit" class="btn btn-link nav-link">Sair</button>
                     </form>
                 @else
-                    <a href="{{ route('cardapio') }}" class="nav-item nav-link">
-                        Ver Cardápio
-                    </a>
-                    <a href="{{ route('usuarioLogin') }}" class="btn btn-primary ms-3">
-                        Fazer Login
-                    </a>
+                    <a href="{{ route('cardapio') }}" class="nav-item nav-link">Ver Cardápio</a>
 
+                    <a href="{{ route('usuarioLogin') }}" class="btn btn-primary ms-3">Fazer Login</a>
                 @endauth
 
             </div>
         </div>
     </nav>
 
-    {{-- Hero: só exibe na home --}}
+    {{-- Hero: só aparece nas páginas que definem @section('hero') (home) --}}
     @hasSection('hero')
         @yield('hero')
     @endif

@@ -23,7 +23,7 @@ class CardapioController extends Controller
             $query->where('nome_produto', 'like', '%' . $busca . '%');
         }
 
-        $produtos = $query->paginate(15);
+        $produtos = $query->paginate(15)->withQueryString();
 
         return view('pages.cardapio', compact('produtos', 'filtro', 'busca'));
     }
@@ -38,12 +38,12 @@ class CardapioController extends Controller
         if ($filtro === 'ativos') $query->where('ativo', 1);
         if ($filtro === 'inativos') $query->where('ativo', 0);
         if ($filtro === 'recentes') $query->orderBy('created_at', 'desc');
-        if ($filtro === 'antigos ') $query->orderBy('created_at', 'asc');
+        if ($filtro === 'antigos') $query->orderBy('created_at', 'asc');
         if ($busca) $query->where('nome_produto', 'like', '%' . $busca . '%');
 
-        $produtos = $query->paginate(10);
+        $produtos = $query->paginate(10)->withQueryString();
 
-        return view('pages.gerenciaProduto', compact('produtos', 'filtro', 'busca'));
+        return view('pages.admin.gerenciaProduto', compact('produtos', 'filtro', 'busca'));
     }
 
     public function cria(Request $request)
@@ -61,7 +61,7 @@ class CardapioController extends Controller
             'descricao' => $request->descricao_produto,
             'preco_atual' => $request->preco_atual,
             'tipo_Produto' => $request->tipo_Produto,
-            'imagem_url' => $this->enviarImagem($request), // Mantido padronizado
+            'imagem_url' => $this->enviarImagem($request),
             'ativo' => 1,
         ]);
 
@@ -84,7 +84,7 @@ class CardapioController extends Controller
         ];
 
         if ($url = $this->enviarImagem($request)) {
-            $dados['imagem_url'] = $url; // Corrigido de 'imagem' para 'imagem_url'
+            $dados['imagem_url'] = $url;
         }
 
         $produto->update($dados);

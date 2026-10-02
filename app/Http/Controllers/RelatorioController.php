@@ -91,7 +91,7 @@ class RelatorioController extends Controller
             ->with('user')
             ->get();
 
-        return view('pages.relatorioVendas', compact(
+        return view('pages.admin.relatorioVendas', compact(
             'periodo',
             'pedidosPeriodo',
             'faturamentoPeriodo',

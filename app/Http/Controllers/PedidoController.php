@@ -14,88 +14,72 @@ class PedidoController extends Controller
     {
         $produtos = Produto::where('ativo', 1)->get();
 
-        return view('pages.facaPedido', compact('produtos'));
+        return view('pages.cliente.facaPedido', compact('produtos'));
     }
 
-    public function userCadastro()
+    public function logado(Request $request)
     {
-        return view('pages.usuarioCadastro');
+        $status = $request->query('status', 'todos');
+
+        $query = Pedido::with('user')
+            ->where('user_id', Auth::id())
+            ->orderBy('data_hora_pedido', 'desc');
+
+        if (in_array($status, ['Confirmando', 'Preparando', 'Pronto'])) {
+            $query->where('statusPedido', $status);
+        }
+
+        $pedidos = $query->paginate(20)->withQueryString();
+
+        $dados = ProdutoPedido::with('produto')
+            ->join('produto', 'produto_pedido.produto_idProduto', '=', 'produto.idProduto')
+            ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
+            ->select(
+                'produto_pedido.pedido_idPedido',
+                'produto_pedido.quantidade',
+                'produto.nome_produto'
+            )
+            ->get();
+
+        return view('pages.cliente.meusPedidos', compact('pedidos', 'dados', 'status'));
     }
 
-   
-  public function logado(Request $request)
-{
-    $status = $request->query('status', 'todos');
+    public function AdminLogado(Request $request)
+    {
+        $filtro = $request->query('status', 'todos');
+        $busca = $request->query('busca');
 
-    $query = Pedido::with('user')
-        ->where('user_id', Auth::id())
-        ->orderBy('data_hora_pedido', 'desc');
+        $query = Pedido::with('user');
 
-    if (in_array($status, ['Confirmando', 'Preparando', 'Pronto'])) {
-        $query->where('statusPedido', $status);
+        if ($filtro === 'recentes') {
+            $query->orderBy('data_hora_pedido', 'desc');
+        }
+
+        if ($filtro === 'antigos') {
+            $query->orderBy('data_hora_pedido', 'asc');
+        }
+
+        // Busca pelo nome do cliente
+        if ($busca) {
+            $query->whereHas('user', function ($q) use ($busca) {
+                $q->where('name', 'like', '%' . $busca . '%');
+            });
+        }
+
+        $pedidos = $query->paginate(10)->withQueryString();
+
+        $dados1 = ProdutoPedido::with('produto')
+            ->join('produto', 'produto_pedido.produto_idProduto', '=', 'produto.idProduto')
+            ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
+            ->select(
+                'produto_pedido.pedido_idPedido',
+                'produto_pedido.quantidade',
+                'produto.nome_produto'
+            )
+            ->get();
+
+        return view('pages.admin.gerenciaStatusp', compact('pedidos', 'dados1', 'filtro', 'busca'));
     }
-
-    $pedidos = $query->paginate(20);
-
-    $dados = ProdutoPedido::with('produto')
-        ->join('produto', 'produto_pedido.produto_idProduto', '=', 'produto.idProduto')
-        ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
-        ->select(
-            'produto_pedido.pedido_idPedido',
-            'produto_pedido.quantidade',
-            'produto.nome_produto'
-        )
-        ->get();
-
-    return view('pages.meusPedidos', compact('pedidos', 'dados', 'status'));
-}
-public function AdminLogado(Request $request)
-{
-    $filtro = $request->query('status', 'todos');
-    $busca = $request->query('busca');
-
-    $query = Pedido::with('user');
-
-    if ($filtro === 'recentes') {
-        $query->orderBy('data_hora_pedido', 'desc');
-    }
-
-    if ($filtro === 'antigos') {
-        $query->orderBy('data_hora_pedido', 'asc');
-    }
-
-    // Busca pelo nome do cliente
-    if ($busca) {
-        $query->whereHas('user', function ($q) use ($busca) {
-            $q->where('nome_usuario', 'like', '%' . $busca . '%');
-        });
-    }
-
-    $pedidos = $query->paginate(10);
-
-    $dados1 = ProdutoPedido::with('produto')
-        ->join(
-            'produto',
-            'produto_pedido.produto_idProduto',
-            '=',
-            'produto.idProduto'
-        )
-        ->whereIn(
-            'produto_pedido.pedido_idPedido',
-            $pedidos->pluck('idPedido')
-        )
-        ->select(
-            'produto_pedido.pedido_idPedido',
-            'produto_pedido.quantidade',
-            'produto.nome_produto'
-        )
-        ->get();
-
-    return view(
-        'pages.gerenciaStatusp',
-        compact('pedidos', 'dados1', 'filtro', 'busca')
-    );
-}
 
     public function atualizarStatus(Request $request, $id)
     {
@@ -118,6 +102,7 @@ public function AdminLogado(Request $request)
             'endereco.min' => 'O endereço deve ter pelo menos 7 caracteres.',
             'produto.required' => 'Selecione ao menos um produto.',
         ]);
+
         $temItemValido = false;
 
         foreach ($request->produto as $quantidade) {
@@ -127,9 +112,10 @@ public function AdminLogado(Request $request)
             }
         }
 
-     if ($temItemValido == false) {
-    return back()->withInput()->withErrors([ 'Selecione ao menos um produto ']);
-}
+        if ($temItemValido == false) {
+            return back()->withInput()->withErrors(['Selecione ao menos um produto ']);
+        }
+
         $valorTotal = 0;
 
         foreach ($request->produto as $idProduto => $quantidade) {

@@ -1,12 +1,17 @@
 /********** Template CSS **********/
 
+:root {
+    --primary: #FEA116;
+    --light: #F1F8FF;
+    --dark: #090d36;
+}
+
 .fundo{
     background-color: #E06A24;
 }
 
 .bg-dark, 
 .navbar-dark,
-.bg-dark hero-header,
 .bg-dark.text-light {
     background-color: #06092a !important;
 }
@@ -26,15 +31,6 @@
     .hero-headerC {
         height: 400px;
     }
-}
-
-
-
-
-:root {
-    --primary: #FEA116;
-    --light: #F1F8FF;
-    --dark: #090d36;
 }
 
 .ff-secondary {
@@ -57,7 +53,6 @@
     z-index: 99;
 }
 
-
 /*** Spinner ***/
 #spinner {
     opacity: 0;
@@ -71,7 +66,6 @@
     visibility: visible;
     opacity: 1;
 }
-
 
 /*** Button ***/
 .btn {
@@ -111,7 +105,6 @@
     font-weight: normal;
     border-radius: 2px;
 }
-
 
 /*** Navbar ***/
 .navbar-dark .navbar-nav .nav-link {
@@ -181,9 +174,7 @@
     }
 }
 
-
 /*** Hero Header ***/
-
 
 .hero-header img {
     animation: imgRotate 50s linear infinite;
@@ -198,7 +189,6 @@
 .breadcrumb-item + .breadcrumb-item::before {
     color: rgba(255, 255, 255, .5);
 }
-
 
 /*** Section Title ***/
 .section-title {
@@ -233,7 +223,6 @@
     display: none;
 }
 
-
 /*** Service ***/
 .service-item {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
@@ -252,13 +241,10 @@
     color: var(--light) !important;
 }
 
-
 /*** Food Menu ***/
 .nav-pills .nav-item .active {
     border-bottom: 2px solid var(--primary);
 }
-
-
 
 /*** Footer ***/
 .footer .btn.btn-social {
@@ -306,7 +292,7 @@
 .footer .copyright {
     padding: 25px 0;
     font-size: 15px;
-    border-top: 1px solid rgba(256, 256, 256, .1);
+    border-top: 1px solid rgba(255, 255, 255, .1);
 }
 
 .footer .copyright a {
@@ -326,10 +312,150 @@
 }
 
 
+/*** cardápio ***/
+.produto-img {
+    width: 200px;
+    height: 150px;
+    object-fit: contain;
+}
 
 
+/*** login e cadastro ***/
+.login-area,
+.register-area {
+    background: #06092a;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
 
+.register-area {
+    min-height: 100vh;
+}
 
+.card-login,
+.card-register {
+    background: #06092a;
+    padding: 35px;
+    width: 100%;
+}
+
+.card-login {
+    margin-top: 150px;
+}
+
+.card-register {
+    margin-top: 80px;
+}
+
+.card-login .form-control {
+    height: 55px;
+    font-size: 18px;
+}
+
+.btn-login {
+    height: 55px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-register .form-control {
+    height: 55px;
+    font-size: 17px;
+    background-color: #0e1240;
+    border: 1px solid #1e2460;
+    color: #ffffff;
+    border-radius: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card-register .form-control:focus {
+    background-color: #0e1240;
+    border-color: #4a6cf7;
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+}
+
+.card-register .form-control::placeholder {
+    color: #4a4e6a;
+}
+
+.card-register .form-label {
+    color: #ffffff;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.card-register .divider {
+    border-color: #1e2460;
+    margin: 28px 0;
+}
+
+.alert-error {
+    background-color: rgba(220, 53, 69, 0.15);
+    border: 1px solid rgba(220, 53, 69, 0.4);
+    color: #ff7b87;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
 
 
 /*** tela admin css ***/
+/* Relatórios */
+.rel-card {
+    background: #0e1240;
+}
+
+.rel-label {
+    color: #9aa0c3;
+    font-size: 13px;
+}
+
+.rel-nome {
+    color: #c9cde0;
+    font-size: 13px;
+}
+
+.rel-valor {
+    font-size: 24px;
+}
+
+.rel-titulo {
+    font-size: 14px;
+}
+
+.rel-eixo {
+    color: #6a6f96;
+    font-size: 11px;
+}
+
+.rel-grafico {
+    height: 120px;
+}
+
+.rel-coluna,
+.rel-barra {
+    background: var(--primary);
+}
+
+.rel-barra {
+    height: 100%;
+}
+
+.rel-trilho {
+    background: #1b1f4a;
+    height: 6px;
+}
+
+.rel-tabela {
+    font-size: 13px;
+}
+
+.rel-tabela thead tr {
+    color: #6a6f96;
+}
+
+.rel-linha {
+    border-top: 0.5px solid #1b1f4a;
+}

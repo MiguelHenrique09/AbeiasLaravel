@@ -5,8 +5,8 @@
 
             <div class="col-lg-3 col-md-6">
                 <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Nossas Políticas</h4>
-                <a class="btn btn-link" >Políticas de Privacidade</a>
-                <a class="btn btn-link" >Termos e Condições</a>
+                <a class="btn btn-link">Políticas de Privacidade</a>
+                <a class="btn btn-link">Termos e Condições</a>
             </div>
 
             <div class="col-lg-3 col-md-6">
@@ -23,21 +23,24 @@
                     <i class="fa fa-envelope me-3"></i>
                     {{ config('app.email_contato', 'abeiasburguer@gmail.com') }}
                 </p>
+
+                {{-- Redes sociais (preencha os links em config/app.php) --}}
                 <div class="d-flex pt-2 gap-2">
-                    {{-- Redes sociais (preencha os links em config/app.php) --}}
-                    @if(config('app.instagram'))
-                        <a class="btn btn-outline-light btn-social" href=target="_blank">
+                    @if (config('app.instagram'))
+                        <a class="btn btn-outline-light btn-social" href="{{ config('app.instagram') }}"
+                            target="_blank" rel="noopener">
                             <i class="fab fa-instagram"></i>
                         </a>
                     @endif
-                    @if(config('app.facebook'))
-                        <a class="btn btn-outline-light btn-social" href=target="_blank">
+                    @if (config('app.facebook'))
+                        <a class="btn btn-outline-light btn-social" href="{{ config('app.facebook') }}"
+                            target="_blank" rel="noopener">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     @endif
-                    @if(config('app.whatsapp'))
-                        <a class="btn btn-outline-light btn-social"
-                           href= target="_blank">
+                    @if (config('app.whatsapp'))
+                        <a class="btn btn-outline-light btn-social" href="{{ config('app.whatsapp') }}"
+                            target="_blank" rel="noopener">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     @endif
@@ -51,8 +54,6 @@
                 <p class="mb-1"><i class="fa fa-clock me-3"></i>Sábado – Domingo</p>
                 <p class="mb-0 ps-4">17h00 – 00h00</p>
             </div>
-
-          
 
         </div>
     </div>

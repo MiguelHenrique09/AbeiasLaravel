@@ -16,9 +16,9 @@
                         faça seu pedido — estaremos ao seu lado em cada etapa, garantindo qualidade,
                         atenção e um atendimento feito com carinho de verdade.
                     </p>
-                   
+
                     @guest
-                         <a href="{{ route('usuarioCadastro') }}" class="btn btn-outline-light py-3 px-5 animated slideInLeft">
+                        <a href="{{ route('usuarioCadastro') }}" class="btn btn-outline-light py-3 px-5 animated slideInLeft">
                             Cadastre-se
                         </a>
                     @endguest
@@ -33,65 +33,56 @@
 
 @section('content')
 
-    {{-- Alertas de sessão (ex: pedido realizado com sucesso) --}}
-    @if(session('success'))
-        <div class="container mt-3">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fa fa-check-circle me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        </div>
-    @endif
-
     <!-- Destaques do Cardápio Start -->
-    @if(isset($destaques) && $destaques->count())
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Cardápio</h5>
-                <h1 class="mb-5">Destaques da Casa</h1>
-            </div>
-            <div class="row g-4">
-                @foreach($destaques as $item)
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="rounded overflow-hidden h-100 d-flex flex-column">
-                        @if($item->imagem)
-                            <img class="img-fluid" src="{{ asset('storage/' . $item->imagem) }}"
-                                 alt="{{ $item->nome }}" style="height:200px;object-fit:cover;">
-                        @endif
-                        <div class="p-4 border border-top-0 flex-grow-1 d-flex flex-direction-column justify-content-between">
-                            <div>
-                                <h5 class="fw-bold mb-1">{{ $item->nome }}</h5>
-                                <p class="text-muted small mb-2">{{ $item->descricao }}</p>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between mt-3">
-                                <span class="text-primary fw-bold fs-5">
-                                    R$ {{ number_format($item->preco, 2, ',', '.') }}
-                                </span>
-                                @auth
-                                    <a 
-                                       class="btn btn-primary btn-sm">
-                                        <i class="fa fa-shopping-cart me-1"></i> Pedir
-                                    </a>
-                                @else
-                                    <a class="btn btn-outline-primary btn-sm">
-                                        Pedir
-                                    </a>
-                                @endauth
+    @if (isset($destaques) && $destaques->count())
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Cardápio</h5>
+                    <h1 class="mb-5">Destaques da Casa</h1>
+                </div>
+
+                <div class="row g-4">
+                    @foreach ($destaques as $item)
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="rounded overflow-hidden h-100 d-flex flex-column">
+                                @if ($item->imagem)
+                                    <img class="img-fluid" src="{{ asset('storage/' . $item->imagem) }}"
+                                        alt="{{ $item->nome }}" style="height:200px;object-fit:cover;">
+                                @endif
+
+                                <div class="p-4 border border-top-0 flex-grow-1 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="fw-bold mb-1">{{ $item->nome }}</h5>
+                                        <p class="text-muted small mb-2">{{ $item->descricao }}</p>
+                                    </div>
+
+                                    <div class="d-flex align-items-center justify-content-between mt-3">
+                                        <span class="text-primary fw-bold fs-5">
+                                            R$ {{ number_format($item->preco, 2, ',', '.') }}
+                                        </span>
+
+                                        @auth
+                                            <a class="btn btn-primary btn-sm">
+                                                <i class="fa fa-shopping-cart me-1"></i> Pedir
+                                            </a>
+                                        @else
+                                            <a class="btn btn-outline-primary btn-sm">Pedir</a>
+                                        @endauth
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                @endforeach
-            </div>
-            <div class="text-center mt-4">
-                <a href="{{ route('cardapio') }}" class="btn btn-primary py-3 px-5">
-                    Ver Cardápio Completo
-                </a>
-                
+
+                <div class="text-center mt-4">
+                    <a href="{{ route('cardapio') }}" class="btn btn-primary py-3 px-5">
+                        Ver Cardápio Completo
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
     @endif
     <!-- Destaques do Cardápio End -->
 
@@ -102,6 +93,7 @@
                 <h5 class="section-title ff-secondary text-center text-primary fw-normal">Nossa História</h5>
                 <h1 class="mb-0">Um pouco sobre nós</h1>
             </div>
+
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="testimonial-item bg-transparent border rounded p-4">
@@ -133,9 +125,4 @@
         </div>
     </div>
     <!-- Sobre Nós End -->
-@if (session('aviso'))
-    <div class="alert alert-warning">
-        {{ session('aviso') }}
-    </div>
-@endif
 @endsection

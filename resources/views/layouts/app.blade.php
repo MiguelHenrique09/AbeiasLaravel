@@ -2,7 +2,6 @@
 <html lang="pt-br">
 
 <head>
-    
     <meta charset="utf-8">
     <title>@yield('title', 'Abeias Burguer')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -10,7 +9,7 @@
     <meta content="@yield('description', '')" name="description">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.ico') }}" rel="icon">
+    <link href="{{ asset('favicon.ico') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,29 +31,28 @@
     <!-- App CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    <!-- Stack para CSS extra por página -->
+    {{-- CSS extra por página --}}
     @stack('styles')
 </head>
 
 <body class="fundo">
     <div class="container-xxl bg-white p-0">
 
-        <!-- Spinner Start -->
+        <!-- Spinner -->
         <div id="spinner"
             class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="visually-hidden">Carregando...</span>
             </div>
         </div>
-        <!-- Spinner End -->
 
-        {{-- Navbar --}}
         @include('partials.navbar')
+
+        @include('partials.alertas')
 
         {{-- Conteúdo principal de cada página --}}
         @yield('content')
 
-        {{-- Footer --}}
         @include('partials.footer')
 
     </div>
@@ -73,7 +71,8 @@
 
     <!-- App JS -->
     <script src="{{ asset('js/main.js') }}"></script>
-    <!-- Stack para JS extra por página -->
+
+    {{-- JS extra por página --}}
     @stack('scripts')
 </body>
 
