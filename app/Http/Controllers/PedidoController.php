@@ -14,7 +14,7 @@ class PedidoController extends Controller
     {
         $produtos = Produto::where('ativo', 1)->get();
 
-        return view('pages.cliente.facaPedido', compact('produtos'));
+        return view('paginas.cliente.facaPedido', compact('produtos'));
     }
 
     public function logado(Request $request)
@@ -41,7 +41,7 @@ class PedidoController extends Controller
             )
             ->get();
 
-        return view('pages.cliente.meusPedidos', compact('pedidos', 'dados', 'status'));
+        return view('paginas.cliente.meusPedidos', compact('pedidos', 'dados', 'status'));
     }
 
     public function AdminLogado(Request $request)
@@ -78,7 +78,7 @@ class PedidoController extends Controller
             )
             ->get();
 
-        return view('pages.admin.gerenciaStatusp', compact('pedidos', 'dados1', 'filtro', 'busca'));
+        return view('paginas.admin.gerenciaStatusp', compact('pedidos', 'dados1', 'filtro', 'busca'));
     }
 
     public function atualizarStatus(Request $request, $id)

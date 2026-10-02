@@ -109,5 +109,5 @@
     </div>
 
     {{-- Modais: adicionar, editar e ativar/inativar --}}
-    @include('pages.admin.partials.modais-produto')
+    @include('paginas.admin.modais.modaisProduto')
 @endsection

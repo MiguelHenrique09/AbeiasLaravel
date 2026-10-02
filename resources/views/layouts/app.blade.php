@@ -46,14 +46,14 @@
             </div>
         </div>
 
-        @include('partials.navbar')
+        @include('layouts.header')
 
-        @include('partials.alertas')
+        @include('layouts.alertas')
 
         {{-- Conteúdo principal de cada página --}}
         @yield('content')
 
-        @include('partials.footer')
+        @include('layouts.footer')
 
     </div>
 

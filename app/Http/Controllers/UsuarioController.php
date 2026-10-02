@@ -9,12 +9,12 @@ class UsuarioController extends Controller
 {
     public function userLogin()
     {
-        return view('pages.auth.usuarioLogin');
+        return view('paginas.autenticacao.usuarioLogin');
     }
 
     public function userCadastro()
     {
-        return view('pages.auth.usuarioCadastro');
+        return view('paginas.autenticacao.usuarioCadastro');
     }
 
     public function indexClientes(Request $request)
@@ -34,6 +34,6 @@ class UsuarioController extends Controller
 
         $clientes = $query->paginate(10)->withQueryString();
 
-        return view('pages.admin.listaClientes', compact('clientes', 'filtro', 'busca'));
+        return view('paginas.admin.listaClientes', compact('clientes', 'filtro', 'busca'));
     }
 }

@@ -25,7 +25,7 @@ class CardapioController extends Controller
 
         $produtos = $query->paginate(15)->withQueryString();
 
-        return view('pages.cardapio', compact('produtos', 'filtro', 'busca'));
+        return view('paginas.cardapio', compact('produtos', 'filtro', 'busca'));
     }
 
     public function indexAdminProdutos(Request $request)
@@ -43,7 +43,7 @@ class CardapioController extends Controller
 
         $produtos = $query->paginate(10)->withQueryString();
 
-        return view('pages.admin.gerenciaProduto', compact('produtos', 'filtro', 'busca'));
+        return view('paginas.admin.gerenciaProduto', compact('produtos', 'filtro', 'busca'));
     }
 
     public function cria(Request $request)

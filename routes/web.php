@@ -7,14 +7,14 @@ use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 // Público
-Route::view('/', 'pages.home')->name('home');
+Route::view('/', 'paginas.home')->name('home');
 Route::get('/cardapio', [CardapioController::class, 'indexClientesProdutos'])->name('cardapio');
 Route::get('pages/usuarioLogin', [UsuarioController::class, 'userLogin'])->name('usuarioLogin');
 Route::get('pages/usuarioCadastro', [UsuarioController::class, 'userCadastro'])->name('usuarioCadastro');
 
 // Administrador
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::view('/pages/homeAdmin', 'pages.admin.homeAdmin')->name('homeAdmin');
+    Route::view('/pages/homeAdmin', 'paginas.admin.homeAdmin')->name('homeAdmin');
 
     // Pedidos
     Route::get('/gerenciaStatusp', [PedidoController::class, 'AdminLogado'])->name('gerenciaStatusp');
