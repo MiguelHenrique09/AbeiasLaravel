@@ -18,3 +18,9 @@ locality:
   regions:
     - us-losa1
 app_id: da_KgYIZt9U9q50
+
+
+jobs:
+  pre-deployment:
+    - name: rodar-migrations
+      execute: php artisan migrate --force
