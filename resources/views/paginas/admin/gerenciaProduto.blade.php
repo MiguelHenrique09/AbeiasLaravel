@@ -3,7 +3,7 @@
 @section('title', 'Produtos — Abeias Burguer')
 
 @section('content')
-    <div class="container bg-dark py-5">
+    <div class="container-fluid bg-dark py-5">
 
         <div class="mb-4 mt-5">
             <h2 class="fw-bold text-white">Gerenciar Produtos</h2>
@@ -22,13 +22,13 @@
         @endif
 
         {{-- Ações, filtro e busca --}}
-        <div class="d-flex gap-2 mb-3">
+        <div class="d-flex flex-wrap gap-2 mb-3">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalAdd">
                 Adicionar Produto
             </button>
 
-            <form method="GET" class="d-flex gap-2">
-                <select name="status" class="form-select bg-dark text-white" onchange="this.form.submit()">
+            <form method="GET" class="d-flex flex-wrap gap-2 flex-grow-1">
+                <select name="status" class="form-select bg-dark text-white w-auto" onchange="this.form.submit()">
                     <option value="todos" @selected($filtro === 'todos')>Todos</option>
                     <option value="ativos" @selected($filtro === 'ativos')>Ativos</option>
                     <option value="inativos" @selected($filtro === 'inativos')>Inativos</option>
@@ -37,7 +37,7 @@
                 </select>
 
                 <input type="text" name="busca" value="{{ $busca }}" placeholder="Buscar produto"
-                    class="form-control">
+                    class="form-control w-auto flex-grow-1">
             </form>
         </div>
 
@@ -48,9 +48,9 @@
 
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th class="d-none d-md-table-cell">ID</th>
                             <th>Nome</th>
-                            <th>Descrição</th>
+                            <th class="d-none d-md-table-cell">Descrição</th>
                             <th>Preço</th>
                             <th>Status</th>
                             <th>Ações</th>
@@ -60,9 +60,9 @@
                     <tbody>
                         @forelse ($produtos as $produto)
                             <tr>
-                                <td>{{ $produto->idProduto }}</td>
+                                <td class="d-none d-md-table-cell">{{ $produto->idProduto }}</td>
                                 <td>{{ $produto->nome_produto }}</td>
-                                <td>{{ $produto->descricao }}</td>
+                                <td class="d-none d-md-table-cell">{{ $produto->descricao }}</td>
                                 <td>R$ {{ number_format($produto->preco_atual, 2, ',', '.') }}</td>
 
                                 <td>
@@ -74,7 +74,7 @@
                                 </td>
 
                                 <td>
-                                    <div class="d-flex gap-2">
+                                    <div class="d-flex flex-column flex-sm-row gap-2">
                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#edit{{ $produto->idProduto }}">
                                             Editar

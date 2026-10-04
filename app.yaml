@@ -5,7 +5,7 @@ package: .
 env:
   APP_ENV: staging
   APP_DEBUG: "true"
-  APP_KEY: "base64:B2ornqSF+cRaW6KuugUqCnMuOAvVNxdVZouaA03QVc8="
+  APP_KEY: "base64:4SZU+d1kL40Sv0i5ZB5KiINwZjVGSluC3a81mLbOkLk="
   DB_CONNECTION: mysql
   SESSION_DRIVER: database
   CACHE_STORE: database

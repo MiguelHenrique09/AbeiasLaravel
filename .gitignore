@@ -24,6 +24,4 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 .env.wasmer
-.env.local
-.env.online
 .env
