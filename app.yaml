@@ -20,7 +20,11 @@ locality:
 app_id: da_KgYIZt9U9q50
 
 
+# Mantenha todo o início do seu arquivo idêntico até o 'app_id'
+
 jobs:
-  pre-deployment:
-    - name: rodar-migrations
-      execute: php artisan migrate --force
+  - name: rodar-migrations
+    trigger: pre-deployment
+    action:
+      execute:
+        command: php artisan migrate --force
