@@ -26,7 +26,7 @@ class UsuarioController extends Controller
 
         if ($filtro === 'recentes') $query->orderBy('created_at', 'desc');
         if ($filtro === 'antigos') $query->orderBy('created_at', 'asc');
-        if ($busca) $query->where('name', 'like', '%' . $busca . '%');
+        if ($busca) $query->where('nome', 'like', '%' . $busca . '%');
 
         if (! in_array($filtro, ['recentes', 'antigos'])) {
             $query->orderBy('created_at', 'desc');

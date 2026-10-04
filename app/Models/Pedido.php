@@ -11,7 +11,7 @@ class Pedido extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'pedido';
+    protected $table = 'pedidos';
     protected $primaryKey = 'idPedido';
 
     protected $fillable = [

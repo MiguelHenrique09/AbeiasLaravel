@@ -34,7 +34,7 @@
                             <h5 class="fw-bold">Pedido {{ $pedido->idPedido }}</h5>
 
                             <p class="mb-1">
-                                <strong>Cliente:</strong> {{ $pedido->user->name }}
+                                <strong>Cliente:</strong> {{ $pedido->user->nome }}
                             </p>
 
                             <p class="mb-1">

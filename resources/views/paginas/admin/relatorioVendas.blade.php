@@ -118,7 +118,7 @@
                     <tbody>
                         @forelse ($clientesTop as $cliente)
                             <tr class="rel-linha">
-                                <td>{{ $cliente->user->name ?? 'Cliente removido' }}</td>
+                                <td>{{ $cliente->user->nome ?? 'Cliente removido' }}</td>
                                 <td class="rel-label">{{ $cliente->user->email ?? '-' }}</td>
                                 <td class="text-end">{{ $cliente->total_pedidos }}</td>
                                 <td class="text-end">R$ {{ number_format($cliente->total_gasto, 2, ',', '.') }}</td>

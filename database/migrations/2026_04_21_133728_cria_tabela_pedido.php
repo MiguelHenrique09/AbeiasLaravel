@@ -16,7 +16,7 @@ return new class extends Migration
 
   
             $table->foreignId('user_id')
-                  ->constrained('usuarios ')
+                  ->constrained('usuarios')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
@@ -31,6 +31,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('pedido');
+        Schema::dropIfExists('pedidos');
     }
 };

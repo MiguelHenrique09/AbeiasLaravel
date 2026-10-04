@@ -14,7 +14,7 @@ class AdminSeeder extends Seeder
         $senha = $this->command->secret('Senha do administrador (mínimo 8 caracteres)');
 
         if (! $senha || strlen($senha) < 8) {
-            $this->command->error('Senha inválida.');
+            $this->command->error('Senha inválida. Nenhum administrador foi criado.');
 
             return;
         }
@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
         User::updateOrCreate(
             ['email' => $email],
             [
-                'name' => 'Administrador',
+                'nome' => 'Administrador',
                 'password' => Hash::make($senha),
                 'tipo_usuario' => 'Administrador',
             ]

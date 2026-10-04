@@ -72,11 +72,11 @@ class RelatorioController extends Controller
 
         // Produtos mais vendidos no período (top 3)
         $produtosMaisVendidos = DB::table('produto_pedido')
-            ->join('produto', 'produto.idProduto', '=', 'produto_pedido.produto_idProduto')
-            ->join('pedido', 'pedido.idPedido', '=', 'produto_pedido.pedido_idPedido')
-            ->whereBetween('pedido.data_hora_pedido', [$dataInicio, Carbon::now()])
-            ->select('produto.nome_produto', DB::raw('SUM(produto_pedido.quantidade) as total_vendido'))
-            ->groupBy('produto.nome_produto')
+            ->join('produtos', 'produtos.idProduto', '=', 'produto_pedido.produto_idProduto')
+            ->join('pedidos', 'pedidos.idPedido', '=', 'produto_pedido.pedido_idPedido')
+            ->whereBetween('pedidos.data_hora_pedido', [$dataInicio, Carbon::now()])
+            ->select('produtos.nome_produto', DB::raw('SUM(produto_pedido.quantidade) as total_vendido'))
+            ->groupBy('produtos.nome_produto')
             ->orderByDesc('total_vendido')
             ->limit(3)
             ->get();

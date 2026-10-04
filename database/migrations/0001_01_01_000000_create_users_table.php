@@ -15,14 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('tipo_usuario', ['Administrador', 'Cliente'])->default('Cliente'); 
-            $table->rememberToken();
+            $table->enum('tipo_usuario', ['Administrador', 'Cliente'])->default('Cliente');
             $table->timestamps();
         });
-
-      
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();

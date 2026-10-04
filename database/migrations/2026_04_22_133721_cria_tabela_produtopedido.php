@@ -11,12 +11,12 @@ return new class extends Migration
         Schema::create('produto_pedido', function (Blueprint $table) {
 
             $table->foreignId('pedido_idPedido')
-                  ->constrained('pedido', 'idPedido')
+                  ->constrained('pedidos', 'idPedido')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
             $table->foreignId('produto_idProduto')
-                  ->constrained('produto', 'idProduto')
+                  ->constrained('produtos', 'idProduto')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 

@@ -9,7 +9,7 @@ class PedidoSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('pedido')->insert([
+        DB::table('pedidos')->insert([
 
             [
                 'idPedido' => 1,

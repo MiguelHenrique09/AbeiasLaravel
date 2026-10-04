@@ -38,7 +38,7 @@
                         @forelse ($clientes as $cliente)
                             <tr>
                                 <td>{{ $cliente->id }}</td>
-                                <td>{{ $cliente->name }}</td>
+                                <td>{{ $cliente->nome }}</td>
                                 <td>{{ $cliente->email }}</td>
                                 <td>{{ $cliente->tipo_usuario }}</td>
                             </tr>

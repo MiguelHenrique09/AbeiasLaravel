@@ -43,7 +43,7 @@
                             <tr>
                                 <td class="ps-4">#{{ $pedido->idPedido }}</td>
 
-                                <td>{{ $pedido->user->name }}</td>
+                                <td>{{ $pedido->user->nome }}</td>
 
                                 <td>{{ $pedido->data_hora_pedido }}</td>
 

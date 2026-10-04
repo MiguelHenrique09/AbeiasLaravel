@@ -28,11 +28,11 @@
                             @csrf
 
                             <div class="mb-4">
-                                <label for="name" class="form-label">Nome completo</label>
-                                <input type="text" id="name" name="name" value="{{ old('name') }}"
-                                    class="form-control @error('name') is-invalid @enderror"
+                                <label for="nome" class="form-label">Nome completo</label>
+                                <input type="text" id="nome" name="nome" value="{{ old('nome') }}"
+                                    class="form-control @error('nome') is-invalid @enderror"
                                     placeholder="Digite seu nome completo" required>
-                                @error('name')
+                                @error('nome')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

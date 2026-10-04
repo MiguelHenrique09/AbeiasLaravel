@@ -32,12 +32,12 @@ class PedidoController extends Controller
         $pedidos = $query->paginate(20)->withQueryString();
 
         $dados = ProdutoPedido::with('produto')
-            ->join('produto', 'produto_pedido.produto_idProduto', '=', 'produto.idProduto')
+            ->join('produtos', 'produto_pedido.produto_idProduto', '=', 'produtos.idProduto')
             ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
             ->select(
                 'produto_pedido.pedido_idPedido',
                 'produto_pedido.quantidade',
-                'produto.nome_produto'
+                'produtos.nome_produto'
             )
             ->get();
 
@@ -62,19 +62,19 @@ class PedidoController extends Controller
         // Busca pelo nome do cliente
         if ($busca) {
             $query->whereHas('user', function ($q) use ($busca) {
-                $q->where('name', 'like', '%' . $busca . '%');
+                $q->where('nome', 'like', '%' . $busca . '%');
             });
         }
 
         $pedidos = $query->paginate(10)->withQueryString();
 
         $dados1 = ProdutoPedido::with('produto')
-            ->join('produto', 'produto_pedido.produto_idProduto', '=', 'produto.idProduto')
+            ->join('produtos', 'produto_pedido.produto_idProduto', '=', 'produtos.idProduto')
             ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
             ->select(
                 'produto_pedido.pedido_idPedido',
                 'produto_pedido.quantidade',
-                'produto.nome_produto'
+                'produtos.nome_produto'
             )
             ->get();
 
