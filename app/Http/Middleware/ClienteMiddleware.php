@@ -14,6 +14,5 @@ class ClienteMiddleware
             return $next($request);
         }
 
-        return redirect('/')->with('aviso', 'Faça login como cliente para acessar essa página.');
-    }
+return redirect('/')->with('warning', 'Acesso não autorizado,autentique-se.');    }
 }

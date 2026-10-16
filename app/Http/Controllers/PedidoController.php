@@ -146,6 +146,6 @@ class PedidoController extends Controller
         }
 
         return redirect()->route('meusPedidos')
-            ->with('successo', 'Pedido realizado com sucesso!');
+            ->with('success', 'Pedido realizado com sucesso!');
     }
 }

@@ -1,8 +1,6 @@
-{{-- Mensagens de sessão: success / successo (sucesso) e aviso (alerta) --}}
 @php
-    // Na home o hero já ocupa o topo; nas demais páginas a navbar fica sobreposta no desktop.
     $espacoTopo = $__env->hasSection('hero') ? 'mt-3' : 'mt-3 mt-lg-5 pt-lg-5';
-    $tipos = ['success' => 'success', 'successo' => 'success', 'aviso' => 'warning'];
+    $tipos = ['success' => 'success', 'error' => 'danger', 'warning' => 'warning', 'info' => 'info'];
 @endphp
 
 @foreach ($tipos as $chave => $classe)

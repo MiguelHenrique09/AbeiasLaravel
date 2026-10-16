@@ -14,6 +14,5 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/')->with('aviso', 'Acesso não autorizado.');
-    }
+return redirect('/')->with('warning', 'Acesso não autorizado,autentique-se.');    }
 }

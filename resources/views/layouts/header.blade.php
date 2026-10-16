@@ -46,7 +46,6 @@
         </div>
     </nav>
 
-    {{-- Hero: só aparece nas páginas que definem @section('hero') (home) --}}
     @hasSection('hero')
         @yield('hero')
     @endif
