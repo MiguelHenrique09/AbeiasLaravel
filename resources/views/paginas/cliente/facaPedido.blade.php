@@ -50,7 +50,8 @@
 
                                             @if ($produto->imagem_url)
                                                 <img src="{{ $produto->imagem_url }}" alt="{{ $produto->nome_produto }}"
-                                                    class="card-img-top" style="height: 160px; object-fit: cover;">
+                                                    class="card-img-top bg-white p-2"
+                                                    style="height: 140px; object-fit: contain;">
                                             @endif
 
                                             <div class="card-body d-flex flex-column">
@@ -93,8 +94,8 @@
                                     Enviar Pedido
                                 </button>
 
-                                <a href="{{ route('meusPedidos') }}" class="btn btn-dark btn-lg flex-fill">
-                                    Meus Pedidos
+                                <a href="{{ route('home') }}" class="btn btn-secondary btn-lg fw-bold flex-fill">
+                                    Cancelar
                                 </a>
                             </div>
 
@@ -104,7 +105,6 @@
                 </div>
             </div>
 
-            <a href="{{ route('home') }}" class="btn btn-light fw-bold">Voltar</a>
         </div>
 
         {{-- Modal de confirmação --}}
