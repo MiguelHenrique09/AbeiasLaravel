@@ -10,7 +10,6 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    // Login: recebe email/senha, devolve o token
     public function login(Request $request)
     {
         $request->validate([
@@ -34,7 +33,6 @@ class AuthController extends Controller
         ]);
     }
 
-    // Logout: apaga só o token usado nesta requisição
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -42,7 +40,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Deslogado com sucesso']);
     }
 
-    // Retorna o usuário autenticado (útil pro app validar o token salvo)
     public function me(Request $request)
     {
         return response()->json($request->user());

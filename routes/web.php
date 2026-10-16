@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Route;
 // Público
 Route::view('/', 'paginas.home')->name('home');
 Route::get('/cardapio', [CardapioController::class, 'indexClientesProdutos'])->name('cardapio');
-Route::get('pages/usuarioLogin', [UsuarioController::class, 'userLogin'])->name('usuarioLogin');
-Route::get('pages/usuarioCadastro', [UsuarioController::class, 'userCadastro'])->name('usuarioCadastro');
+
+// Visitante (quem já está logado é redirecionado)
+Route::middleware('guest')->group(function () {
+    Route::get('pages/usuarioLogin', [UsuarioController::class, 'userLogin'])->name('usuarioLogin');
+    Route::get('pages/usuarioCadastro', [UsuarioController::class, 'userCadastro'])->name('usuarioCadastro');
+});
 
 // Administrador
 Route::middleware(['auth', 'admin'])->group(function () {

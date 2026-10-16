@@ -8,25 +8,25 @@ use Illuminate\Http\Request;
 
 class CardapioController extends Controller
 {
-    public function indexClientesProdutos(Request $request)
-    {
-        $filtro = $request->query('status', 'todos');
-        $busca = $request->query('busca');
+   public function indexClientesProdutos(Request $request)
+{
+    $filtro = $request->query('categoria', 'todos');
+    $busca = $request->query('busca');
 
-        $query = Produto::query()->where('ativo', 1);
+    $query = Produto::query()->where('ativo', 1);
 
-        if (in_array($filtro, ['Lanche', 'Porção', 'Bebida'])) {
-            $query->where('tipo_Produto', $filtro);
-        }
-
-        if ($busca) {
-            $query->where('nome_produto', 'like', '%' . $busca . '%');
-        }
-
-        $produtos = $query->paginate(15)->withQueryString();
-
-        return view('paginas.cardapio', compact('produtos', 'filtro', 'busca'));
+    if (in_array($filtro, ['Lanche', 'Porção', 'Bebida'])) {
+        $query->where('tipo_Produto', $filtro);
     }
+
+    if ($busca) {
+        $query->where('nome_produto', 'like', '%' . $busca . '%');
+    }
+
+    $produtos = $query->paginate(15)->withQueryString();
+
+    return view('paginas.cardapio', compact('produtos', 'filtro', 'busca'));
+}
 
     public function indexAdminProdutos(Request $request)
     {

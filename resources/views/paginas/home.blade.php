@@ -33,7 +33,6 @@
 
 @section('content')
 
-    <!-- Destaques do Cardápio Start -->
     @if (isset($destaques) && $destaques->count())
         <div class="container-xxl py-5">
             <div class="container">
@@ -84,9 +83,7 @@
             </div>
         </div>
     @endif
-    <!-- Destaques do Cardápio End -->
 
-    <!-- Sobre Nós Start -->
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="text-center mb-4">
@@ -124,5 +121,4 @@
             </div>
         </div>
     </div>
-    <!-- Sobre Nós End -->
 @endsection

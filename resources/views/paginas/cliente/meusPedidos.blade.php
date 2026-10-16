@@ -34,20 +34,16 @@
                             <h5 class="fw-bold">Pedido {{ $pedido->idPedido }}</h5>
 
                             <p class="mb-1">
-                                <strong>Cliente:</strong> {{ $pedido->user->nome }}
-                            </p>
-
-                            <p class="mb-1">
-                                <strong>Data:</strong> {{ $pedido->data_hora_pedido }}
+                                <strong>Data:</strong>
+                                {{ \Carbon\Carbon::parse($pedido->data_hora_pedido)->format('d/m/Y H:i') }}
                             </p>
 
                             <p class="mb-1"><strong>Produtos:</strong></p>
-                            <i>Quantidade x Produto</i>
 
                             <ul class="list-unstyled ms-3 mb-2">
                                 @foreach ($dados as $produto)
                                     @if ($produto->pedido_idPedido == $pedido->idPedido)
-                                        <li>{{ $produto->quantidade }} {{ $produto->nome_produto }}</li>
+                                        <li>{{ $produto->quantidade }}x {{ $produto->nome_produto }}</li>
                                     @endif
                                 @endforeach
                             </ul>

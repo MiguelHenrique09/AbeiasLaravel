@@ -37,7 +37,6 @@
     </div>
 </div>
 
-{{-- MODAIS POR PRODUTO: EDITAR e ATIVAR/INATIVAR --}}
 @foreach ($produtos as $produto)
 
     {{-- Editar --}}
@@ -76,7 +75,6 @@
         </div>
     </div>
 
-    {{-- Ativar / Inativar --}}
     <div class="modal fade" id="status{{ $produto->idProduto }}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
 

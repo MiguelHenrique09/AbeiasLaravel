@@ -7,6 +7,8 @@ use App\Models\Produto;
 use App\Models\ProdutoPedido;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class PedidoController extends Controller
 {
@@ -17,12 +19,13 @@ class PedidoController extends Controller
         return view('paginas.cliente.facaPedido', compact('produtos'));
     }
 
+
+
     public function logado(Request $request)
     {
         $status = $request->query('status', 'todos');
 
-        $query = Pedido::with('user')
-            ->where('user_id', Auth::id())
+        $query = Pedido::where('user_id', Auth::id())
             ->orderBy('data_hora_pedido', 'desc');
 
         if (in_array($status, ['Confirmando', 'Preparando', 'Pronto'])) {
@@ -31,8 +34,7 @@ class PedidoController extends Controller
 
         $pedidos = $query->paginate(20)->withQueryString();
 
-        $dados = ProdutoPedido::with('produto')
-            ->join('produtos', 'produto_pedido.produto_idProduto', '=', 'produtos.idProduto')
+        $dados = ProdutoPedido::join('produtos', 'produto_pedido.produto_idProduto', '=', 'produtos.idProduto')
             ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
             ->select(
                 'produto_pedido.pedido_idPedido',
@@ -44,45 +46,49 @@ class PedidoController extends Controller
         return view('paginas.cliente.meusPedidos', compact('pedidos', 'dados', 'status'));
     }
 
-    public function AdminLogado(Request $request)
-    {
-        $filtro = $request->query('status', 'todos');
-        $busca = $request->query('busca');
 
-        $query = Pedido::with('user');
 
-        if ($filtro === 'recentes') {
-            $query->orderBy('data_hora_pedido', 'desc');
-        }
 
-        if ($filtro === 'antigos') {
-            $query->orderBy('data_hora_pedido', 'asc');
-        }
+public function AdminLogado(Request $request)
+{
+    $filtro = $request->query('status', 'todos');
+    $busca = $request->query('busca');
 
-        // Busca pelo nome do cliente
-        if ($busca) {
-            $query->whereHas('user', function ($q) use ($busca) {
-                $q->where('nome', 'like', '%' . $busca . '%');
-            });
-        }
+    $query = Pedido::with('user')->orderBy('data_hora_pedido', 'desc');
 
-        $pedidos = $query->paginate(10)->withQueryString();
-
-        $dados1 = ProdutoPedido::with('produto')
-            ->join('produtos', 'produto_pedido.produto_idProduto', '=', 'produtos.idProduto')
-            ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
-            ->select(
-                'produto_pedido.pedido_idPedido',
-                'produto_pedido.quantidade',
-                'produtos.nome_produto'
-            )
-            ->get();
-
-        return view('paginas.admin.gerenciaStatusp', compact('pedidos', 'dados1', 'filtro', 'busca'));
+    if (in_array($filtro, ['Confirmando', 'Preparando', 'Pronto'])) {
+        $query->where('statusPedido', $filtro);
     }
+
+    if ($busca) {
+        $query->whereHas('user', function ($q) use ($busca) {
+            $q->where('nome', 'like', '%' . $busca . '%');
+        });
+    }
+
+    $pedidos = $query->paginate(10)->withQueryString();
+
+    $dados1 = ProdutoPedido::join('produtos', 'produto_pedido.produto_idProduto', '=', 'produtos.idProduto')
+        ->whereIn('produto_pedido.pedido_idPedido', $pedidos->pluck('idPedido'))
+        ->select(
+            'produto_pedido.pedido_idPedido',
+            'produto_pedido.quantidade',
+            'produtos.nome_produto'
+        )
+        ->get();
+
+    return view('paginas.admin.gerenciaStatusp', compact('pedidos', 'dados1', 'filtro', 'busca'));
+}
+
+
+
 
     public function atualizarStatus(Request $request, $id)
     {
+        $request->validate([
+            'statusPedido' => ['required', Rule::in(['Confirmando', 'Preparando', 'Pronto'])],
+        ]);
+
         $pedido = Pedido::findOrFail($id);
 
         $pedido->statusPedido = $request->statusPedido;
@@ -91,59 +97,62 @@ class PedidoController extends Controller
         return back();
     }
 
+
+
+    
     public function salvar(Request $request)
     {
         $request->validate([
             'endereco' => 'required|min:7',
             'observacoes' => 'nullable|string',
             'produto' => 'required|array',
+            'produto.*' => 'nullable|integer|min:0',
         ], [
             'endereco.required' => 'O endereço é obrigatório.',
             'endereco.min' => 'O endereço deve ter pelo menos 7 caracteres.',
             'produto.required' => 'Selecione ao menos um produto.',
         ]);
 
-        $temItemValido = false;
+        // Só os itens com quantidade maior que zero
+        $itens = array_filter($request->produto, fn ($quantidade) => $quantidade > 0);
 
-        foreach ($request->produto as $quantidade) {
-            if ($quantidade > 0) {
-                $temItemValido = true;
-                break;
-            }
+        if (count($itens) === 0) {
+            return back()->withInput()->withErrors(['Selecione ao menos um produto']);
         }
 
-        if ($temItemValido == false) {
-            return back()->withInput()->withErrors(['Selecione ao menos um produto ']);
+        $produtos = Produto::whereIn('idProduto', array_keys($itens))
+            ->where('ativo', 1)
+            ->get()
+            ->keyBy('idProduto');
+
+        if ($produtos->count() !== count($itens)) {
+            return back()->withInput()->withErrors(['Um dos produtos não está mais disponível']);
         }
 
-        $valorTotal = 0;
+        DB::transaction(function () use ($request, $itens, $produtos) {
+            $valorTotal = 0;
+            $linhas = [];
 
-        foreach ($request->produto as $idProduto => $quantidade) {
-            if ($quantidade > 0) {
-                $produto = Produto::find($idProduto);
-                $valorTotal += $produto->preco_atual * $quantidade;
-            }
-        }
-
-        $pedido = Pedido::create([
-            'user_id' => Auth::id(),
-            'data_hora_pedido' => now(),
-            'statusPedido' => 'Confirmando',
-            'observacoes' => $request->observacoes ?: 'Sem observações',
-            'endereco' => $request->endereco,
-            'valor_total' => $valorTotal,
-        ]);
-
-        foreach ($request->produto as $idProduto => $quantidade) {
-            if ($quantidade > 0) {
-                $produto = Produto::find($idProduto);
-
-                $pedido->produtos()->attach($idProduto, [
+            foreach ($itens as $idProduto => $quantidade) {
+                $preco = $produtos[$idProduto]->preco_atual;
+                $valorTotal += $preco * $quantidade;
+                $linhas[$idProduto] = [
                     'quantidade' => $quantidade,
-                    'preco_unitario' => $produto->preco_atual,
-                ]);
+                    'preco_unitario' => $preco,
+                ];
             }
-        }
+
+            $pedido = Pedido::create([
+                'user_id' => Auth::id(),
+                'data_hora_pedido' => now(),
+                'statusPedido' => 'Confirmando',
+                'observacoes' => $request->observacoes ?: 'Sem observações',
+                'endereco' => $request->endereco,
+                'valor_total' => $valorTotal,
+            ]);
+
+            $pedido->produtos()->attach($linhas);
+        });
 
         return redirect()->route('meusPedidos')
             ->with('success', 'Pedido realizado com sucesso!');

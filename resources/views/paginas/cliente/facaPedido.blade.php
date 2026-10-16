@@ -67,6 +67,7 @@
                                                         name="produto[{{ $produto->idProduto }}]"
                                                         value="{{ old('produto.' . $produto->idProduto, 0) }}"
                                                         data-preco="{{ $produto->preco_atual }}"
+                                                        data-nome="{{ $produto->nome_produto }}"
                                                         class="form-control text-center">
 
                                                     <button class="btn bg-dark text-white" type="button"
@@ -97,7 +98,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('usuarioLogin') }}" class="btn btn-light fw-bold">Voltar</a>
+            <a href="{{ route('home') }}" class="btn btn-light fw-bold">Voltar</a>
         </div>
 
         {{-- Modal de confirmação --}}
@@ -164,6 +165,8 @@
         function abrirResumo() {
             let totalItens = 0;
             let totalValor = 0;
+            const lista = document.getElementById("listaItens");
+            lista.innerHTML = "";
 
             document.querySelectorAll("input[name^='produto']").forEach(input => {
                 const qtd = parseInt(input.value) || 0;
@@ -171,6 +174,11 @@
                 if (qtd > 0) {
                     totalItens += qtd;
                     totalValor += qtd * parseFloat(input.dataset.preco);
+
+                    const li = document.createElement("li");
+                    li.className = "list-group-item";
+                    li.textContent = qtd + "x " + input.dataset.nome;
+                    lista.appendChild(li);
                 }
             });
 
@@ -179,6 +187,11 @@
         }
 
         function confirmarPedido() {
+            if (parseInt(document.getElementById("totalItens").innerText) === 0) {
+                alert("Selecione ao menos um produto.");
+                return;
+            }
+
             const endereco = document.getElementById("endereco").value.trim();
 
             if (endereco.length < 7) {

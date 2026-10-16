@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Pedido;
 use App\Models\Produto;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -42,11 +41,11 @@ class RelatorioController extends Controller
                 $dataAtual->addDay();
             }
         } elseif ($periodo === 'mes') {
-            // Agrupado por semana (janelas de 7 dias)
+            // Agrupado por semana 
             $inicioSemana = $dataInicio->copy();
             $numeroSemana = 1;
             while ($inicioSemana <= Carbon::today()) {
-                $fimSemana = $inicioSemana->copy()->addDays(6)->min(Carbon::today());
+                $fimSemana = $inicioSemana->copy()->addDays(6)->min(Carbon::today())->endOfDay();
                 $pedidosPorPeriodo[] = [
                     'label' => 'Sem ' . $numeroSemana,
                     'total' => Pedido::whereBetween('data_hora_pedido', [$inicioSemana, $fimSemana])->count(),
@@ -57,7 +56,7 @@ class RelatorioController extends Controller
         } else { // 'ano'
             // Agrupado por mês
             for ($i = 11; $i >= 0; $i--) {
-                $mesRef = Carbon::now()->subMonths($i);
+                $mesRef = Carbon::now()->subMonthsNoOverflow($i);
                 $pedidosPorPeriodo[] = [
                     'label' => $mesRef->translatedFormat('M'),
                     'total' => Pedido::whereYear('data_hora_pedido', $mesRef->year)
@@ -70,10 +69,11 @@ class RelatorioController extends Controller
         $totaisPeriodo = array_column($pedidosPorPeriodo, 'total');
         $maxPedidosPeriodo = !empty($totaisPeriodo) ? max($totaisPeriodo) : 1;
 
-        // Produtos mais vendidos no período (top 3)
+        // Top 3 produtos mais vendidos no período
         $produtosMaisVendidos = DB::table('produto_pedido')
             ->join('produtos', 'produtos.idProduto', '=', 'produto_pedido.produto_idProduto')
             ->join('pedidos', 'pedidos.idPedido', '=', 'produto_pedido.pedido_idPedido')
+            ->whereNull('pedidos.deleted_at')
             ->whereBetween('pedidos.data_hora_pedido', [$dataInicio, Carbon::now()])
             ->select('produtos.nome_produto', DB::raw('SUM(produto_pedido.quantidade) as total_vendido'))
             ->groupBy('produtos.nome_produto')
@@ -82,7 +82,7 @@ class RelatorioController extends Controller
             ->get();
         $maxVendido = $produtosMaisVendidos->max('total_vendido') ?: 1;
 
-        // Clientes com mais pedidos no período (top 5)
+        // 5 clientes com mais pedidos no período
         $clientesTop = Pedido::select('user_id', DB::raw('COUNT(*) as total_pedidos'), DB::raw('SUM(valor_total) as total_gasto'))
             ->whereBetween('data_hora_pedido', [$dataInicio, Carbon::now()])
             ->groupBy('user_id')
