@@ -60,6 +60,9 @@
                             <p class="mb-0">
                                 <strong>Status:</strong> {{ $pedido->statusPedido }}
                             </p>
+                            <p class="mb-0">
+                                <strong>Endereço:</strong> {{ $pedido->endereco }}
+                            </p>
 
                         </div>
                     </div>
