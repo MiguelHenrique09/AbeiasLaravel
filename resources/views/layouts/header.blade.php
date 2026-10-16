@@ -1,4 +1,4 @@
-<!-- Navbar & Hero Start -->
+<!-- Navbar Start -->
 <div class="container-xxl position-relative p-0">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
@@ -31,7 +31,7 @@
 
                     <form method="POST" action="{{ route('logout') }}" class="ms-3">
                         @csrf
-                        <button type="submit" class="btn btn-danger ">Sair</button>
+                        <button type="submit" class="btn btn-danger">Sair</button>
                     </form>
                 @else
                     <a href="{{ route('cardapio') }}" class="nav-item nav-link">Ver Cardápio</a>
@@ -43,9 +43,5 @@
         </div>
     </nav>
 
-    @hasSection('hero')
-        @yield('hero')
-    @endif
-
 </div>
-<!-- Navbar & Hero End -->
+<!-- Navbar End -->
