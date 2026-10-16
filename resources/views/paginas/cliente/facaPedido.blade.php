@@ -46,7 +46,13 @@
                             <div class="row g-4">
                                 @foreach ($produtos as $produto)
                                     <div class="col-md-6 col-lg-4">
-                                        <div class="card h-100 border-0 shadow-sm rounded-4">
+                                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+
+                                            @if ($produto->imagem_url)
+                                                <img src="{{ $produto->imagem_url }}" alt="{{ $produto->nome_produto }}"
+                                                    class="card-img-top" style="height: 160px; object-fit: cover;">
+                                            @endif
+
                                             <div class="card-body d-flex flex-column">
 
                                                 <h5 class="fw-bold text-dark">{{ $produto->nome_produto }}</h5>
@@ -58,7 +64,7 @@
                                                 </p>
 
                                                 <label class="form-label small text-muted">Quantidade</label>
-                                                <div class="input-group" style="width: 150px;">
+                                                <div class="input-group mt-auto" style="width: 150px;">
                                                     <button class="btn bg-dark text-white" type="button"
                                                         onclick="alterarQtde('prod-{{ $produto->idProduto }}', -1)">-</button>
 
