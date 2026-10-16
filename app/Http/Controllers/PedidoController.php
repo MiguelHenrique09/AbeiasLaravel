@@ -154,7 +154,7 @@ public function AdminLogado(Request $request)
             $pedido->produtos()->attach($linhas);
         });
 
-        return redirect()->route('meusPedidos')
-            ->with('success', 'Pedido realizado com sucesso!');
+        return redirect()->route('meusPedidos');
+          
     }
 }
