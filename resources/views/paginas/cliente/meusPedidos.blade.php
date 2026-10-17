@@ -35,7 +35,7 @@
 
                             <p class="mb-1">
                                 <strong>Data:</strong>
-                                {{ \Carbon\Carbon::parse($pedido->data_hora_pedido)->format('d/m/Y H:i') }}
+                                {{\Carbon::parse($pedido->data_hora_pedido)->format('d/m/Y H:i') }}
                             </p>
 
                             <p class="mb-1"><strong>Produtos:</strong></p>
@@ -61,7 +61,7 @@
                                 <strong>Status:</strong> {{ $pedido->statusPedido }}
                             </p>
                             <p class="mb-0">
-                                <strong>Endereço:</strong> {{ $pedido->forma_pagamento }}
+                                <strong>Endereço:</strong> {{ $pedido->endereco }}
 
                         </div>
                     </div>
