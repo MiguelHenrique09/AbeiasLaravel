@@ -40,25 +40,26 @@
     @stack('styles')
 
     @if ($app)
-    <style>
-        body.modo-app,
-        .modo-app > .container-xxl {
-            background: #070b2b !important;
-        }
+        <style>
+            body.modo-app,
+            .modo-app>.container-xxl {
+                background: #070b2b !important;
+            }
 
-   
-        .modo-app main {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-        .modo-app .container.bg-dark,
-        .modo-app .login-area {
-            padding-top: 16px !important;
-            margin-top: 0 !important;
-        }
-    </style>
-@endif
+
+            .modo-app main {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+
+            .modo-app .container.bg-dark,
+            .modo-app .login-area {
+                padding-top: 16px !important;
+                margin-top: 0 !important;
+            }
+        </style>
+    @endif
 </head>
 
 <body class="fundo {{ $app ? 'modo-app' : '' }}">
@@ -105,7 +106,7 @@
     @if ($app)
         <script>
             // Remove o botão VOLTAR (qualquer link/botão com esse texto) no app
-            document.querySelectorAll('a, button').forEach(function (el) {
+            document.querySelectorAll('a, button').forEach(function(el) {
                 if (el.textContent.trim().toLowerCase() === 'voltar') el.remove();
             });
         </script>

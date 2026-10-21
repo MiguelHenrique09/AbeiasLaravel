@@ -5,14 +5,10 @@ use App\Http\Controllers\Api\PedidoControllerApp;
 use App\Http\Controllers\Api\ProdutoControllerApp;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/login', [AuthController::class, 'login']);
 Route::get('/produtos', [ProdutoControllerApp::class, 'index']);
-Route::post('/cadastrar', [AuthController::class, 'cadastrar']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/me', [AuthController::class, 'me']);
     Route::get('/pedidos', [PedidoControllerApp::class, 'index']);
     Route::post('/pedidos', [PedidoControllerApp::class, 'store']);
-
 });

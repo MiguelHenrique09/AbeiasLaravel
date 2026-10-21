@@ -11,7 +11,7 @@
                 <div class="col-md-6">
 
                     <div class="card-login">
-  <h2 class="text-white mb-2">Entre em sua conta</h2>
+                        <h2 class="text-white mb-2">Entre em sua conta</h2>
                         {{-- Erros de validação (ex: credenciais inválidas) --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -48,16 +48,16 @@
 
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-primary w-100 btn-login">Login</button>
-                            </div>  
-                           <div class="mt-4">
-    <a href="{{ route('usuarioCadastro') }}"
-        class="btn btn-primary w-100 btn-login d-flex align-items-center justify-content-center">
-        Cadastre-se
-    </a>
-</div>
+                            </div>
+                            <div class="mt-4">
+                                <a href="{{ route('usuarioCadastro') }}"
+                                    class="btn btn-primary w-100 btn-login d-flex align-items-center justify-content-center">
+                                    Cadastre-se
+                                </a>
+                            </div>
                         </form>
 
-                      
+
 
                     </div>
                 </div>

@@ -10,17 +10,17 @@
             <small class="text-muted">Atualize o status de cada pedido do sistema</small>
         </div>
 
-    {{-- Filtro --}}
-<div class="d-flex gap-2 mb-3">
-    <form method="GET" class="d-flex gap-2">
-        <select name="status" class="form-select bg-dark text-white" onchange="this.form.submit()">
-            <option value="todos" @selected($filtro === 'todos')>Todos</option>
-            <option value="Confirmando" @selected($filtro === 'Confirmando')>Confirmando</option>
-            <option value="Preparando" @selected($filtro === 'Preparando')>Preparando</option>
-            <option value="Pronto" @selected($filtro === 'Pronto')>Pronto</option>
-        </select>
-    </form>
-</div>
+        {{-- Filtro --}}
+        <div class="d-flex gap-2 mb-3">
+            <form method="GET" class="d-flex gap-2">
+                <select name="status" class="form-select bg-dark text-white" onchange="this.form.submit()">
+                    <option value="todos" @selected($filtro === 'todos')>Todos</option>
+                    <option value="Confirmando" @selected($filtro === 'Confirmando')>Confirmando</option>
+                    <option value="Preparando" @selected($filtro === 'Preparando')>Preparando</option>
+                    <option value="Pronto" @selected($filtro === 'Pronto')>Pronto</option>
+                </select>
+            </form>
+        </div>
 
         {{-- Tabela --}}
         <div class="card border-0 bg-dark shadow-sm p-3">
