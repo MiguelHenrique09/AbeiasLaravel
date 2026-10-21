@@ -5,7 +5,7 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 // Público
 Route::view('/', 'paginas.home')->name('home');
 Route::get('/cardapio', [CardapioController::class, 'indexClientesProdutos'])->name('cardapio');
@@ -44,3 +44,14 @@ Route::middleware(['auth', 'cliente'])->group(function () {
     Route::get('/meusPedidos', [PedidoController::class, 'logado'])->name('meusPedidos');
     Route::post('/pedido', [PedidoController::class, 'salvar'])->name('pedido.salvar');
 });
+Route::middleware('auth','cliente')->get('/app/token', function (Request $request) {
+    $user = $request->user();
+    $query = http_build_query([
+        'token' => $user->createToken('app')->plainTextToken,
+        'nome' => $user->nome,
+        'email' => $user->email,
+    ]);
+    return redirect('/app/token-ok?' . $query);
+});
+
+Route::get('/app/token-ok', fn () => 'Login concluído');

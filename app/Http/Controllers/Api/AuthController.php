@@ -10,6 +10,29 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function cadastrar(Request $request)
+    {
+        $dados = $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:usuarios,email'],
+            'password' => ['required', 'min:6', 'confirmed'],
+        ]);
+
+        $user = User::create([
+            'nome' => $dados['nome'],
+            'email' => $dados['email'],
+            'password' => Hash::make($dados['password']),
+            'tipo_usuario' => 'cliente',
+        ]);
+
+        $token = $user->createToken('mobile')->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ], 201);
+    }
+
     public function login(Request $request)
     {
         $request->validate([
