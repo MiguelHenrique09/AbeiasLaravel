@@ -49,11 +49,12 @@
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-primary w-100 btn-login">Login</button>
                             </div>  
-                            <div class="mt-4">
-                            <a href="{{ route('usuarioCadastro') }}" class="btn btn-primary w-100 btn-login">
-                                Cadastre-se
-                            </a>
-                        </div>
+                           <div class="mt-4">
+    <a href="{{ route('usuarioCadastro') }}"
+        class="btn btn-primary w-100 btn-login d-flex align-items-center justify-content-center">
+        Cadastre-se
+    </a>
+</div>
                         </form>
 
                       
