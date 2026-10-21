@@ -11,7 +11,7 @@
                 <div class="col-md-6">
 
                     <div class="card-login">
-
+  <h2 class="text-white mb-2">Entre em sua conta</h2>
                         {{-- Erros de validação (ex: credenciais inválidas) --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
