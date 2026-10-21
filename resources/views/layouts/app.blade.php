@@ -1,3 +1,6 @@
+@php
+    $app = str_contains(request()->userAgent() ?? '', 'AbeiasApp');
+@endphp
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -35,9 +38,22 @@
 
     {{-- CSS extra por página --}}
     @stack('styles')
+
+    @if ($app)
+        <style>
+            .modo-app .btn-voltar { display: none !important; }
+            .modo-app > .container-xxl { background: transparent !important; }
+            .modo-app main {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 12px 0;
+            }
+        </style>
+    @endif
 </head>
 
-<body class="fundo">
+<body class="fundo {{ $app ? 'modo-app' : '' }}">
     <div class="container-xxl bg-white p-0 d-flex flex-column min-vh-100">
         @include('layouts.alertas')
         <!-- Spinner -->
@@ -48,17 +64,19 @@
             </div>
         </div>
 
-        @include('layouts.header')
+        @unless ($app)
+            @include('layouts.header')
 
-        @yield('hero')
-
+            @yield('hero')
+        @endunless
 
         <main class="flex-grow-1">
             @yield('content')
         </main>
 
-        @include('layouts.footer')
-
+        @unless ($app)
+            @include('layouts.footer')
+        @endunless
     </div>
 
     <!-- JavaScript Libraries -->
@@ -75,6 +93,15 @@
 
     <!-- App JS -->
     <script src="{{ asset('js/main.js') }}"></script>
+
+    @if ($app)
+        <script>
+            // Remove o botão VOLTAR (qualquer link/botão com esse texto) no app
+            document.querySelectorAll('a, button').forEach(function (el) {
+                if (el.textContent.trim().toLowerCase() === 'voltar') el.remove();
+            });
+        </script>
+    @endif
 
     {{-- JS extra por página --}}
     @stack('scripts')

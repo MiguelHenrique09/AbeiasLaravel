@@ -3,13 +3,7 @@
 @section('title', 'Cadastro — Abeias Burguer')
 
 @section('content')
-@if (str_contains(request()->userAgent() ?? '', 'AbeiasApp'))
-<style>
-    nav.navbar, footer, .btn-voltar { display: none !important; }
-    body { padding-top: 0 !important; }
-    main, .container, section { margin-top: 0 !important; padding-top: 12px !important; }
-</style>
-@endif
+
     <div class="container bg-dark py-4">
         <div class="container-fluid register-area">
 
