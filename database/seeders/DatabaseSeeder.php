@@ -15,8 +15,6 @@ class DatabaseSeeder extends Seeder
         Produto::factory()->count(20)->create();
 
         $this->call([
-            PedidoSeeder::class,
-            ProdutoPedidoSeeder::class,
             AdminSeeder::class,
         ]);
     }
