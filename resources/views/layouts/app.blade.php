@@ -40,17 +40,25 @@
     @stack('styles')
 
     @if ($app)
-        <style>
-            .modo-app .btn-voltar { display: none !important; }
-            .modo-app > .container-xxl { background: transparent !important; }
-            .modo-app main {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                padding: 12px 0;
-            }
-        </style>
-    @endif
+    <style>
+        body.modo-app,
+        .modo-app > .container-xxl {
+            background: #070b2b !important;
+        }
+
+   
+        .modo-app main {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .modo-app .container.bg-dark,
+        .modo-app .login-area {
+            padding-top: 16px !important;
+            margin-top: 0 !important;
+        }
+    </style>
+@endif
 </head>
 
 <body class="fundo {{ $app ? 'modo-app' : '' }}">
